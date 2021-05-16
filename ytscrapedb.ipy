@@ -1,0 +1,638 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "383352de",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>idTranscripts</th>\n",
+       "      <th>Video URL</th>\n",
+       "      <th>Video Title</th>\n",
+       "      <th>Video Description</th>\n",
+       "      <th>Video Transcript</th>\n",
+       "      <th>Channel Name</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>10</th>\n",
+       "      <td>11</td>\n",
+       "      <td>https://www.youtube.com/watch?v=TvQU0AcxytE</td>\n",
+       "      <td>Eric Dollard - History of the Marconi RCA Stat...</td>\n",
+       "      <td>Support Eric Dollard - join for free: http://e...</td>\n",
+       "      <td>recorded welcome to be November 8th welcome to...</td>\n",
+       "      <td>eric dollard</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>11</th>\n",
+       "      <td>12</td>\n",
+       "      <td>https://www.youtube.com/watch?v=RglYCkg_TOM</td>\n",
+       "      <td>Lone Pine Writings interview of Eric Dollard b...</td>\n",
+       "      <td>Support Eric Dollard - join for free: http://e...</td>\n",
+       "      <td>okay so this is Erin Murakami and today is Oct...</td>\n",
+       "      <td>eric dollard</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>12</th>\n",
+       "      <td>13</td>\n",
+       "      <td>https://www.youtube.com/watch?v=cQMKu-fMXeY</td>\n",
+       "      <td>Eric Dollard on Dark City Radio by Matt McMaho...</td>\n",
+       "      <td>Support Eric Dollard http://ericpdollard.com. ...</td>\n",
+       "      <td>Skipped</td>\n",
+       "      <td>eric dollard</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>13</th>\n",
+       "      <td>14</td>\n",
+       "      <td>https://www.youtube.com/watch?v=fI3tAUD8-Y0</td>\n",
+       "      <td>Eric Dollard Answers Facebook Questions</td>\n",
+       "      <td>http://facebook.com/ericpdollard - Eric Dollar...</td>\n",
+       "      <td>Skipped</td>\n",
+       "      <td>eric dollard</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>14</th>\n",
+       "      <td>15</td>\n",
+       "      <td>https://www.youtube.com/watch?v=Nf60qB0Wk9g</td>\n",
+       "      <td>Eric Dollard Interview - Advanced Seismic Warn...</td>\n",
+       "      <td>http://ericpdollard.com/indiegogo Eric Dollard...</td>\n",
+       "      <td>hello Eric are you there here okay let's see w...</td>\n",
+       "      <td>eric dollard</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>15</th>\n",
+       "      <td>16</td>\n",
+       "      <td>https://www.youtube.com/watch?v=N2fNK29kEsc</td>\n",
+       "      <td>Eric Dollard - Smart Scarecrow Show with Gary ...</td>\n",
+       "      <td>http://ericpdollard.com/indiegogo - Gary Hende...</td>\n",
+       "      <td>Skipped</td>\n",
+       "      <td>eric dollard</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>16</th>\n",
+       "      <td>17</td>\n",
+       "      <td>https://www.youtube.com/watch?v=2Yj0AnozizI</td>\n",
+       "      <td>Eric Dollard - post conference interview by Aa...</td>\n",
+       "      <td>Support Eric Dollard, join his official homepa...</td>\n",
+       "      <td>this is Erin Murakami with the Bedini Lindeman...</td>\n",
+       "      <td>eric dollard</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>17</th>\n",
+       "      <td>18</td>\n",
+       "      <td>https://www.youtube.com/watch?v=r862_Jg2a7g</td>\n",
+       "      <td>Eric Dollard Facebook Q &amp; A on 2014-02-23</td>\n",
+       "      <td>Support Eric Dollard http://ericpdollard.com\\n...</td>\n",
+       "      <td>okay hi everybody this is Aaron with Eric doll...</td>\n",
+       "      <td>eric dollard</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>18</th>\n",
+       "      <td>19</td>\n",
+       "      <td>https://www.youtube.com/watch?v=3YC1n8RCf-k</td>\n",
+       "      <td>Eric Dollard Wireless Giant of the Pacific Int...</td>\n",
+       "      <td>Support Eric Dollard - join for free: http://e...</td>\n",
+       "      <td>hi this is Aaron again with eric dollard here ...</td>\n",
+       "      <td>eric dollard</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19</th>\n",
+       "      <td>20</td>\n",
+       "      <td>https://www.youtube.com/watch?v=dSQs26uSK_M</td>\n",
+       "      <td>Eric Dollard Interviewd by Gary Hendershot of ...</td>\n",
+       "      <td>Support Eric Dollard - join free http://ericpd...</td>\n",
+       "      <td>Skipped</td>\n",
+       "      <td>eric dollard</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    idTranscripts                                    Video URL  \\\n",
+       "10             11  https://www.youtube.com/watch?v=TvQU0AcxytE   \n",
+       "11             12  https://www.youtube.com/watch?v=RglYCkg_TOM   \n",
+       "12             13  https://www.youtube.com/watch?v=cQMKu-fMXeY   \n",
+       "13             14  https://www.youtube.com/watch?v=fI3tAUD8-Y0   \n",
+       "14             15  https://www.youtube.com/watch?v=Nf60qB0Wk9g   \n",
+       "15             16  https://www.youtube.com/watch?v=N2fNK29kEsc   \n",
+       "16             17  https://www.youtube.com/watch?v=2Yj0AnozizI   \n",
+       "17             18  https://www.youtube.com/watch?v=r862_Jg2a7g   \n",
+       "18             19  https://www.youtube.com/watch?v=3YC1n8RCf-k   \n",
+       "19             20  https://www.youtube.com/watch?v=dSQs26uSK_M   \n",
+       "\n",
+       "                                          Video Title  \\\n",
+       "10  Eric Dollard - History of the Marconi RCA Stat...   \n",
+       "11  Lone Pine Writings interview of Eric Dollard b...   \n",
+       "12  Eric Dollard on Dark City Radio by Matt McMaho...   \n",
+       "13            Eric Dollard Answers Facebook Questions   \n",
+       "14  Eric Dollard Interview - Advanced Seismic Warn...   \n",
+       "15  Eric Dollard - Smart Scarecrow Show with Gary ...   \n",
+       "16  Eric Dollard - post conference interview by Aa...   \n",
+       "17          Eric Dollard Facebook Q & A on 2014-02-23   \n",
+       "18  Eric Dollard Wireless Giant of the Pacific Int...   \n",
+       "19  Eric Dollard Interviewd by Gary Hendershot of ...   \n",
+       "\n",
+       "                                    Video Description  \\\n",
+       "10  Support Eric Dollard - join for free: http://e...   \n",
+       "11  Support Eric Dollard - join for free: http://e...   \n",
+       "12  Support Eric Dollard http://ericpdollard.com. ...   \n",
+       "13  http://facebook.com/ericpdollard - Eric Dollar...   \n",
+       "14  http://ericpdollard.com/indiegogo Eric Dollard...   \n",
+       "15  http://ericpdollard.com/indiegogo - Gary Hende...   \n",
+       "16  Support Eric Dollard, join his official homepa...   \n",
+       "17  Support Eric Dollard http://ericpdollard.com\\n...   \n",
+       "18  Support Eric Dollard - join for free: http://e...   \n",
+       "19  Support Eric Dollard - join free http://ericpd...   \n",
+       "\n",
+       "                                     Video Transcript  Channel Name  \n",
+       "10  recorded welcome to be November 8th welcome to...  eric dollard  \n",
+       "11  okay so this is Erin Murakami and today is Oct...  eric dollard  \n",
+       "12                                            Skipped  eric dollard  \n",
+       "13                                            Skipped  eric dollard  \n",
+       "14  hello Eric are you there here okay let's see w...  eric dollard  \n",
+       "15                                            Skipped  eric dollard  \n",
+       "16  this is Erin Murakami with the Bedini Lindeman...  eric dollard  \n",
+       "17  okay hi everybody this is Aaron with Eric doll...  eric dollard  \n",
+       "18  hi this is Aaron again with eric dollard here ...  eric dollard  \n",
+       "19                                            Skipped  eric dollard  "
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "###\n",
+    "# This is a JuPyTer Notebook for `ytscrapedb` a database created and grown by `ytscrapeqt` a python3 based\n",
+    "# Selenium WebDriver script & GUI, with shell based .LOG file. \n",
+    "###\n",
+    "\n",
+    "import os\n",
+    "import pymysql\n",
+    "import pandas as pd\n",
+    "\n",
+    "host = os.getenv('MYSQL_HOST')\n",
+    "port = os.getenv('MYSQL_PORT')\n",
+    "user = os.getenv('MYSQL_USER')\n",
+    "password = os.getenv('MYSQL_PASSWORD')\n",
+    "database = os.getenv('MYSQL_DATABASE')\n",
+    "\n",
+    "conn = pymysql.connect(\n",
+    "    host=host,\n",
+    "    port=int(3306),\n",
+    "    user=\"pyscrape\",\n",
+    "    passwd=\"ytscrape\",\n",
+    "    db=\"ytscrape\",\n",
+    "    charset='utf8mb4')\n",
+    "\n",
+    "## This converts the entire MySQL Transcripts table into a DataFrame\n",
+    "df = pd.read_sql_query(\"SELECT * FROM Transcripts WHERE `Channel Name` = 'eric dollard'\", conn)\n",
+    "df.tail(-10)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "02a85833",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9db7780c",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "8bf311fa",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "id": "9a6f8e68",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['250', '30', '10', '10', '1000', '45', '45', '50s', '12000', '80', '2000', '20s', '18hour', '18', '24', '48', '10', '15', '62', '30', '160', '10', '20', '30']\n",
+      "['ladies', 'and', 'gentlemen', 'thank', 'you', 'for', 'coming', 'back', 'to', 'another', 'edition', 'of', 'tesla', 'vision', 'tv', 'we', 'are', 'going', 'to', 'review', 'some', 'work', 'of', 'a', 'very', 'special', 'individual', 'that', 'has', 'persevered', 'through', 'much', 'of', 'controversy', 'in', 'pursuit', 'of', 'technological', 'advancement', 'for', 'all', 'humankind', 'his', 'work', 'in', 'tesla', 'oriented', 'technologies', 'is', 'very', 'interesting', 'and', 'has', 'been', 'gaining', 'some', 'monumental', 'support', 'in', 'popular', 'culture', 'we', 'have', 'here', 'with', 'us', 'today', 'mr', 'eric', 'dollar', 'and', 'also', 'my', 'cohost', 'zoran', 'pilot', 'who', 'has', 'also', 'been', 'traveling', 'around', 'the', 'world', 'recently', 'and', 'has', 'been', 'meeting', 'with', 'various', 'organizations', 'at', 'the', 'tesla', 'museum', 'of', 'belgrade', 'and', 'educating', 'individuals', 'of', 'much', 'of', 'the', 'great', 'work', 'that', 'is', 'being', 'conducted', 'here', 'and', 'around', 'the', 'world', 'on', 'tesla', 'related', 'technologies', 'well', 'thank', 'you', 'sam', 'im', 'glad', 'to', 'be', 'back', 'and', 'im', 'glad', 'that', 'you', 'have', 'this', 'guest', 'because', 'as', 'you', 'know', 'i', 'live', 'in', 'california', 'and', 'im', 'very', 'much', 'fearless', 'person', 'but', 'to', 'be', 'honest', 'with', 'you', 'they', 'stick', 'to', 'work', 'very', 'hard', 'on', 'me', 'knowing', 'those', 'two', 'earthquakes', 'that', 'i', 'survived', 'here', 'and', 'its', 'a', 'northridge', 'and', 'whittier', 'and', 'i', 'really', 'appreciate', 'and', 'i', 'gonna', 'be', 'very', 'very', 'good', 'listener', 'what', 'eric', 'has', 'to', 'say', 'eric', 'welcome', 'to', 'the', 'show', 'thank', 'you', 'welcome', 'please', 'eric', 'if', 'you', 'will', 'tell', 'us', 'a', 'bit', 'about', 'your', 'recent', 'campaign', 'that', 'has', 'been', 'a', 'very', 'successful', 'well', 'i', 'mean', 'im', 'kind', 'of', 'at', 'a', 'distant', 'end', 'of', 'it', 'so', 'im', 'just', 'learning', 'about', 'a', 'lot', 'of', 'this', 'stuff', 'now', 'so', 'after', 'being', 'out', 'in', 'the', 'desert', 'and', 'its', 'fantastic', 'that', 'that', 'all', 'this', 'has', 'happened', 'because', 'we', 'really', 'faced', 'a', 'big', 'obstacle', 'of', 'having', 'to', 'come', 'up', 'with', 'the', 'bond', 'to', 'build', 'on', 'government', 'property', 'and', 'i', 'didnt', 'know', 'if', 'we', 'were', 'going', 'to', 'make', 'that', 'through', 'that', 'and', 'and', 'its', 'absolutely', 'fantastic', 'that', 'thats', 'happened', 'now', 'that', 'things', 'can', 'really', 'start', 'to', 'advance', 'wonderful', 'wonderful', 'now', 'ladies', 'and', 'gentlemen', 'for', 'listeners', 'mr', 'dollard', 'has', 'begun', 'a', 'project', 'to', 'make', 'an', 'advanced', 'seismic', 'warning', 'system', 'and', 'its', 'apparently', 'built', 'on', 'tesla', 'technology', 'would', 'you', 'please', 'enlighten', 'our', 'audience', 'a', 'bit', 'on', 'how', 'you', 'feel', 'that', 'this', 'seismic', 'warning', 'system', 'is', 'predicated', 'to', 'tesla', 'technology', 'well', 'actually', 'its', 'an', 'advancement', 'on', 'tech', 'tesla', 'technology', 'made', 'by', 'ernst', 'alexander', 'some', 'and', 'then', 'i', 'made', 'an', 'advancement', 'upon', 'that', 'in', 'order', 'to', 'make', 'it', 'a', 'wideband', 'system', 'where', 'you', 'werent', 'confined', 'to', 'one', 'resident', 'frequency', 'but', 'it', 'would', 'work', 'over', 'the', 'entire', 'audio', 'frequency', 'band', 'up', 'into', 'the', 'the', 'higher', 'end', 'of', 'the', 'vlf', 'part', 'that', 'only', 'like', 'coyotes', 'and', 'and', 'rats', 'can', 'hear', 'up', 'about', '250', 'kilocycles', 'and', 'that', 'basically', 'is', 'my', 'own', 'invention', 'took', 'about', '30', 'years', 'to', 'figure', 'it', 'out', 'from', 'an', 'analytical', 'standpoint', 'then', 'about', '10', 'years', 'the', 'antenna', 'wasnt', 'that', 'hard', 'to', 'build', 'other', 'than', 'finding', 'the', 'parts', 'but', 'it', 'took', '10', 'years', 'to', 'develop', 'the', 'special', 'receiver', 'to', 'go', 'with', 'it', 'at', 'landers', 'california', 'and', 'then', 'upon', 'its', 'completion', 'it', 'was', 'promptly', 'taken', 'away', 'from', 'me', 'so', 'now', 'im', 'trying', 'to', 'start', 'over', 'again', 'but', 'its', 'not', 'at', 'this', 'day', 'and', 'age', 'i', 'cant', 'just', 'go', 'back', 'to', 'rca', 'or', 'bell', 'telephone', 'and', 'get', 'the', 'parts', 'i', 'need', 'because', 'those', 'organizations', 'dont', 'exist', 'anymore', 'and', 'the', 'parts', 'all', 'appear', 'on', 'the', 'internet', 'if', 'you', 'can', 'even', 'find', 'them', 'for', 'massive', 'quantities', 'of', 'money', 'right', 'now', 'we', 'need', 'a', 'power', 'supply', 'for', 'a', 'project', 'were', 'working', 'on', 'and', 'and', 'just', 'because', 'the', 'stuffs', 'made', 'by', 'the', 'phone', 'company', 'somebody', 'wants', 'almost', '1000', 'for', 'it', 'i', 'can', 'imagine', 'yeah', 'so', 'what', 'other', 'technological', 'or', 'financial', 'hurdles', 'would', 'you', 'say', 'youre', 'currently', 'undergoing', 'to', 'continue', 'with', 'your', 'project', 'i', 'mean', 'youre', 'well', 'funded', 'with', 'pursuing', 'all', 'the', 'materials', 'and', 'youre', 'i', 'understand', 'you', 'have', 'a', 'brilliant', 'idea', 'of', 'utilizing', 'old', 'telephone', 'poles', 'as', 'it', 'were', 'to', 'essentially', 'cut', 'down', 'on', 'the', 'material', 'cost', 'and', 'youre', 'essentially', 'having', 'a', 'really', 'great', 'project', 'for', 'that', 'could', 'possibly', 'be', 'replicated', 'elsewhere', 'in', 'the', 'country', 'for', 'utilizing', 'old', 'modes', 'of', 'electrical', 'transfer', 'yeah', 'its', 'um', 'basically', 'what', 'im', 'building', 'now', 'its', 'not', 'on', 'the', 'san', 'andreas', 'fault', 'where', 'were', 'you', 'know', 'previously', 'it', 'was', 'so', 'its', 'more', 'of', 'a', 'demonstrator', 'model', 'one', 'thing', 'that', 'made', 'this', 'possible', 'is', 'when', 'the', 'government', 'took', 'over', 'certain', 'track', 'to', 'land', 'there', 'there', 'was', 'a', 'about', 'maybe', 'a', 'mile', 'and', 'a', 'half', 'of', 'utility', 'poles', 'carrying', 'a', 'cable', 'television', 'coaxial', 'cable', 'is', '45', 'poles', 'in', 'the', 'right', 'away', 'and', 'you', 'know', 'im', 'not', 'really', 'enthused', 'anymore', 'about', 'digging', '45', 'telephone', 'pole', 'holes', 'if', 'you', 'know', 'what', 'i', 'mean', 'plus', 'finding', 'the', 'poles', 'and', 'the', 'rest', 'of', 'that', 'so', 'one', 'major', 'portion', 'of', 'the', 'labor', 'is', 'done', 'there', 'and', 'then', 'the', 'same', 'organization', 'on', 'kind', 'of', 'the', 'other', 'side', 'of', 'that', 'track', 'to', 'land', 'out', 'there', 'in', 'the', 'desert', 'has', 'on', 'the', 'death', 'valley', 'side', 'has', 'about', 'maybe', 'i', 'would', 'say', 'eight', 'or', 'ten', 'miles', 'of', 'pretty', 'damaged', 'but', 'a', 'lot', 'of', 'useful', 'parts', 'of', 'the', 'jay', 'carrier', 'telephone', 'lines', 'that', 'we', 'need', 'to', 'make', 'the', 'alexander', 'sand', 'in', 'ten', 'out', 'of', 'so', 'so', 'once', 'the', 'wind', 'stopped', 'and', 'it', 'starts', 'to', 'warm', 'up', 'we', 'were', 'going', 'to', 'take', 'down', 'about', 'two', 'miles', 'its', 'going', 'to', 'be', 'a', 'lot', 'of', 'work', 'and', 'then', 'and', 'then', 'pack', 'that', 'up', 'and', 'then', 'start', 'to', 'put', 'that', 'up', 'for', 'the', 'alexandros', 'an', 'antenna', 'system', 'but', 'before', 'we', 'put', 'the', 'alexander', 'antenna', 'system', 'up', 'we', 'have', 'to', 'clean', 'up', 'the', 'coaxial', 'lines', 'that', 'are', 'draping', 'all', 'over', 'the', 'place', 'and', 'remove', 'some', 'of', 'them', 'those', 'busted', 'poles', 'we', 'have', 'to', 'replace', 'so', 'so', 'basically', 'because', 'of', 'the', 'weather', 'conditions', 'and', 'you', 'only', 'can', 'work', 'like', 'april', 'may', 'june', 'and', 'then', 'it', 'becomes', 'like', 'november', 'december', 'about', 'expecting', 'about', 'within', 'one', 'year', 'we', 'will', 'have', 'the', 'alexanderson', 'antenna', 'up', 'on', 'the', 'poles', 'okay', 'also', 'and', 'then', 'in', 'the', 'meantime', 'i', 'have', 'to', 'find', 'the', 'terminal', 'equipment', 'which', 'is', 'going', 'to', 'be', 'a', 'lot', 'of', 'obsolete', 'bell', 'telephone', 'wireline', 'carrier', 'stuff', 'fortunately', 'i', 'just', 'came', 'across', 'some', 'very', 'valuable', 'items', 'and', 'trade', 'for', 'some', 'work', 'i', 'did', 'on', 'a', 'system', 'that', 'somebody', 'else', 'has', 'and', 'and', 'then', 'the', 'money', 'thats', 'left', 'over', 'from', 'the', 'indiegogo', 'thing', 'theres', 'fifteen', 'thousand', 'dollars', 'after', 'the', 'government', 'bond', 'i', 'have', 'to', 'start', 'going', 'on', 'ebay', 'now', 'and', 'finding', 'the', 'the', 'pen', 'recorders', 'for', 'the', 'mechanical', 'seismograph', 'end', 'of', 'it', 'and', 'the', 'electrical', 'indications', 'the', 'university', 'of', 'that', 'area', 'has', 'donate', 'a', 'complete', 'seismograph', 'pickup', 'installation', 'to', 'us', 'which', 'is', 'a', 'massive', 'step', 'forward', 'so', 'so', 'fortunately', 'in', 'this', 'place', 'a', 'map', 'which', 'im', 'kind', 'of', 'keeping', 'a', 'secret', 'theres', 'the', 'government', 'support', 'level', 'is', 'high', 'and', 'thats', 'going', 'to', 'save', 'me', 'a', 'lot', 'of', 'effort', 'having', 'to', 'make', 'my', 'own', 'stuff', 'or', 'go', 'out', 'and', 'find', 'this', 'stuff', 'its', 'its', 'actually', 'everyones', 'really', 'excited', 'how', 'theres', 'some', 'kind', 'of', 'karma', 'thats', 'just', 'pushing', 'this', 'whole', 'project', 'forward', 'erik', 'obviously', 'you', 'know', 'indiegogo', 'campaign', 'was', 'successful', 'you', 'have', 'a', 'good', 'followers', 'your', 'idea', 'is', 'very', 'much', 'noble', 'when', 'you', 'talk', 'about', 'the', 'government', 'support', 'why', 'they', 'wouldnt', 'support', 'even', 'more', 'i', 'mean', 'we', 'always', 'whenever', 'the', 'earthquake', 'is', 'we', 'witness', 'you', 'know', 'theyre', 'saying', 'and', 'claiming', 'the', 'prediction', 'cannot', 'be', 'done', 'and', 'we', 'very', 'well', 'know', 'that', 'animals', 'have', 'that', 'instinct', 'that', 'they', 'have', 'that', 'sense', 'of', 'listening', 'those', 'frequencies', 'you', 'know', 'thats', 'actually', 'pretty', 'much', 'what', 'youre', 'trying', 'to', 'do', 'why', 'they', 'are', 'not', 'getting', 'more', 'involved', 'you', 'know', 'and', 'what', 'secrets', 'pretty', 'much', 'they', 'would', 'love', 'from', 'you', 'to', 'be', 'revealed', 'and', 'what', 'you', 'kind', 'of', 'hiding', 'in', 'the', 'sense', 'you', 'know', 'that', 'that', 'is', 'protected', 'as', 'your', 'intellectual', 'property', 'yeah', 'i', 'mean', 'its', 'youre', 'dealing', 'with', 'a', 'complicated', 'situation', 'you', 'know', 'not', 'all', 'not', 'all', 'government', 'agencies', 'are', 'friendly', 'with', 'other', 'government', 'agencies', 'and', 'theres', 'theres', 'certain', 'government', 'agencies', 'that', 'despise', 'earthquake', 'prediction', 'because', 'thats', 'where', 'they', 'derive', 'their', 'funding', 'so', 'theyre', 'not', 'your', 'friend', 'in', 'these', 'type', 'of', 'situations', 'but', 'then', 'theres', 'other', 'things', 'going', 'on', 'communications', 'wise', 'here', 'and', 'scientifically', 'the', 'the', 'seismic', 'aspect', 'of', 'it', 'is', 'only', 'one', 'part', 'of', 'whats', 'going', 'on', 'here', 'the', 'alexanders', 'the', 'network', 'is', 'is', 'that', 'im', 'building', 'is', 'a', 'highly', 'generalized', 'system', 'that', 'will', 'allow', 'for', 'studies', 'of', 'propagation', 'and', 'and', 'and', 'many', 'communications', 'and', 'many', 'other', 'things', 'so', 'so', 'that', 'is', 'kind', 'of', 'why', 'the', 'project', 'is', 'getting', 'supported', 'its', 'not', 'being', 'government', 'lis', 'supported', 'by', 'people', 'that', 'are', 'interested', 'in', 'the', 'earthquake', 'stuff', 'those', 'people', 'would', 'try', 'to', 'shut', 'the', 'project', 'down', 'so', 'im', 'really', 'in', 'a', 'very', 'delicate', 'situation', 'talking', 'about', 'stuff', 'on', 'the', 'air', 'absolutely', 'understandable', 'i', 'mean', 'youve', 'been', 'the', 'scientist', 'and', 'youve', 'been', 'acclaimed', 'you', 'know', 'a', 'writer', 'can', 'you', 'take', 'us', 'a', 'little', 'bit', 'back', 'you', 'know', 'basically', 'of', 'your', 'interest', 'you', 'know', 'how', 'did', 'you', 'got', 'into', 'the', 'you', 'know', 'all', 'this', 'electricity', 'and', 'how', 'do', 'you', 'associate', 'yourself', 'with', 'tesla', 'work', 'well', 'my', 'interest', 'of', 'electricity', 'goes', 'back', 'to', 'very', 'very', 'early', 'childhood', 'when', 'the', 'things', 'that', 'would', 'happen', 'with', 'power', 'lines', 'when', 'i', 'was', 'about', 'five', 'or', 'six', 'years', 'old', 'were', 'so', 'stunning', 'when', 'something', 'would', 'go', 'wrong', 'that', 'you', 'know', 'it', 'made', 'an', 'impact', 'on', 'me', 'as', 'what', 'was', 'going', 'on', 'there', 'and', 'how', 'these', 'things', 'came', 'about', 'so', 'about', 'the', 'age', 'of', 'seven', 'back', 'in', 'the', '50s', 'you', 'know', 'you', 'could', 'do', 'stuff', 'you', 'cant', 'do', 'these', 'things', 'this', 'day', 'and', 'age', 'but', 'i', 'was', 'allowed', 'to', 'hang', 'out', 'with', 'the', 'line', 'crews', 'and', 'then', 'they', 'taught', 'me', 'the', 'principles', 'and', 'then', 'about', 'the', 'time', 'i', 'was', 'in', 'the', 'fifth', 'grade', 'the', 'local', 'power', 'company', 'started', 'providing', 'me', 'with', 'a', 'lot', 'of', 'special', 'education', 'material', 'from', 'from', 'the', 'the', 'corporate', 'office', 'there', 'so', 'at', 'that', 'time', 'i', 'mean', 'i', 'was', 'basically', 'capable', 'of', 'constructing', 'any', 'outside', 'plant', 'you', 'know', 'transformer', 'banks', 'of', 'you', 'know', 'deltay', 'configurations', 'on', 'them', 'sectional', 'icing', 'switches', 'dead', 'dead', 'end', 'poles', 'i', 'knew', 'all', 'that', 'stuff', 'in', 'the', 'fifth', 'grade', 'then', 'rca', 'got', 'involved', 'my', 'junior', 'high', 'school', 'year', 'first', 'year', 'in', 'high', 'school', 'and', 'then', 'they', 'gave', 'me', 'free', 'front', 'free', 'run', 'of', 'was', 'one', 'of', 'the', 'biggest', 'radio', 'transmitting', 'facilities', 'on', 'the', 'planet', 'and', 'there', 'was', 'a', 'lot', 'of', 'you', 'know', 'insurance', 'paperwork', 'and', 'complications', 'that', 'i', 'have', 'to', 'to', 'figure', 'out', 'a', 'way', 'through', 'to', 'get', 'you', 'know', 'so', 'that', 'i', 'can', 'hang', 'out', 'you', 'know', 'around', '12000', 'volt', 'systems', 'and', 'all', 'that', 'as', 'a', 'juvenile', 'and', 'that', 'was', 'all', 'taken', 'care', 'of', 'by', 'the', 'school', 'and', 'my', 'parents', 'and', 'rca', 'that', 'was', 'a', 'major', 'step', 'forward', 'because', 'then', 'at', 'that', 'point', 'the', 'original', 'prints', 'for', 'the', 'alexanderson', 'system', 'and', 'the', 'people', 'that', 'worked', 'on', 'it', 'there', 'the', 'polina', 'station', 'was', 'a', 'singular', 'alexander', 'sen', 'system', 'that', 'no', 'one', 'knows', 'about', 'none', 'of', 'the', 'ones', 'that', 'are', 'portrayed', 'today', 'in', 'any', 'way', 'resemble', 'it', 'and', 'that', 'was', 'all', 'made', 'available', 'to', 'me', 'along', 'with', 'any', 'that', 'i', 'wanted', 'to', 'do', 'there', 'in', 'the', 'station', 'to', 'be', 'part', 'of', 'its', 'operation', 'like', 'tuning', 'up', 'transmitters', 'or', 'fixing', 'equipment', 'so', 'with', 'that', 'and', 'then', 'in', 'my', 'senior', 'year', 'i', 'dont', 'know', 'exactly', 'how', 'this', 'came', 'about', 'theres', 'a', 'number', 'of', 'possibilities', 'one', 'is', 'about', 'my', 'senior', 'year', 'in', 'high', 'school', 'i', 'had', 'all', 'the', 'necessary', 'fcc', 'licenses', 'to', 'be', 'any', 'kind', 'of', 'radio', 'or', 'radar', 'engineer', 'so', 'the', 'phone', 'company', 'showed', 'up', 'looked', 'like', 'a', 'couple', 'fbi', 'spooks', 'they', 'came', 'into', 'my', 'geometry', 'class', 'and', 'pulled', 'me', 'and', 'my', 'closest', 'friend', 'out', 'of', 'class', 'they', 'said', 'we', 'want', 'you', 'to', 'come', 'out', 'somebody', 'want', 'to', 'talk', 'to', 'you', 'you', 'know', 'my', 'first', 'response', 'was', 'sheer', 'terror', 'because', 'you', 'know', 'i', 'figured', 'you', 'know', 'the', 'thing', 'that', 'wiped', 'out', 'all', 'the', 'tv', 'reception', 'last', 'night', 'in', 'town', 'that', 'i', 'was', 'experimenting', 'what', 'got', 'me', 'in', 'big', 'trouble', 'and', 'and', 'they', 'wanted', 'me', 'to', 'come', 'once', 'a', 'week', 'to', 'one', 'of', 'their', 'bell', 'telephone', 'facilities', 'and', 'they', 'had', 'some', 'plan', 'for', 'me', 'so', 'they', 'brought', 'me', 'there', 'and', 'they', 'gave', 'me', 'free', 'run', 'of', 'the', 'facilities', 'not', 'to', 'the', 'extent', 'of', 'rca', 'and', 'that', 'there', 'always', 'had', 'to', 'be', 'somebody', 'with', 'me', 'and', 'i', 'was', 'more', 'directed', 'but', 'they', 'gave', 'me', 'lots', 'of', 'books', 'and', 'then', 'they', 'wanted', 'me', 'when', 'i', 'got', 'on', 'high', 'school', 'to', 'go', 'to', 'work', 'in', 'the', 'telephone', 'companies', 'so', 'by', 'the', 'time', 'i', 'graduated', 'from', 'high', 'school', 'i', 'was', 'already', 'electrical', 'engineer', 'and', 'how', 'did', 'you', 'discover', 'that', 'curiosity', 'you', 'know', 'pretty', 'much', 'we', 'always', 'talk', 'about', 'that', 'creativity', 'and', 'your', 'vision', 'your', 'interest', 'it', 'was', 'kind', 'of', 'hidden', 'you', 'and', 'you', 'know', 'you', 'discover', 'your', 'godly', 'icon', 'in', 'you', 'and', 'you', 'start', 'pursuing', 'that', 'you', 'know', 'i', 'mean', 'it', 'looks', 'like', 'its', 'your', 'life', 'so', 'what', 'do', 'you', 'see', 'you', 'know', 'of', 'your', 'prior', 'achievement', 'and', 'what', 'do', 'you', 'hope', 'to', 'achieve', 'well', 'i', 'mean', 'thats', 'kind', 'of', 'a', 'big', 'jump', 'from', 'high', 'school', 'i', 'dont', 'know', 'i', 'mean', 'to', 'describe', 'the', 'way', 'that', 'i', 'think', 'and', 'operate', 'i', 'dont', 'i', 'dont', 'know', 'if', 'its', 'possible', 'or', 'people', 'will', 'understand', 'it', 'because', 'you', 'have', 'to', 'remember', 'that', 'im', 'a', 'feral', 'human', 'and', 'you', 'know', 'and', 'to', 'be', 'brought', 'into', 'the', 'standard', 'environment', 'the', 'people', 'that', 'live', 'in', 'is', 'hideous', 'to', 'me', 'its', 'the', 'first', 'thing', 'i', 'want', 'to', 'do', 'is', 'run', 'six', 'days', 'to', 'get', 'over', 'it', 'and', 'it', 'really', 'overwhelms', 'me', 'and', 'it', 'gives', 'me', 'bad', 'dreams', 'and', 'all', 'that', 'type', 'of', 'stuff', 'so', 'i', 'work', 'on', 'a', 'level', 'more', 'like', 'you', 'know', 'i', 'would', 'say', 'like', 'a', 'coyote', 'so', 'whatever', 'a', 'coyote', 'objectives', 'are', 'thats', 'kind', 'of', 'what', 'my', 'objectives', 'are', 'i', 'dont', 'know', 'how', 'to', 'convert', 'it', 'into', 'human', 'terms', 'so', 'see', 'ya', 'the', 'thing', 'is', 'is', 'i', 'want', 'to', 'do', 'this', 'but', 'i', 'cant', 'do', 'this', 'and', 'then', 'i', 'do', 'this', 'and', 'then', 'its', 'destroyed', 'and', 'then', 'you', 'know', 'im', 'living', 'in', 'a', 'retrograde', 'society', 'thats', 'equivalent', 'to', 'you', 'know', 'a', 'fully', 'loaded', 'railroad', 'train', 'going', 'over', 'the', 'tehachapi', 'to', '80', 'miles', 'an', 'hour', 'and', 'you', 'climb', 'up', 'to', 'the', 'front', 'to', 'find', 'out', 'where', 'its', 'going', 'so', 'fast', 'and', 'theres', 'nobody', 'in', 'the', 'controls', 'there', 'yeah', 'so', 'i', 'dont', 'know', 'what', 'to', 'say', 'about', 'any', 'of', 'it', 'so', 'now', 'ive', 'been', 'directed', 'by', 'whatever', 'force', 'is', 'and', 'voodoo', 'and', 'whatever', 'to', 'this', 'particular', 'project', 'so', 'im', 'going', 'to', 'make', 'another', 'round', 'for', 'the', 'alexanders', 'in', 'that', 'one', 'oh', 'what', 'what', 'i', 'want', 'to', 'point', 'out', 'okay', 'is', 'when', 'when', 'i', 'had', 'graduated', 'from', 'my', 'relationship', 'with', 'rca', 'and', 'bell', 'telephone', 'rca', 'actually', 'continue', 'for', 'much', 'longer', 'after', 'high', 'school', 'and', 'went', 'into', 'the', 'navy', 'and', 'then', 'actually', 'got', 'to', 'be', 'have', 'problems', 'thrown', 'on', 'me', 'that', 'nobody', 'in', 'the', 'navy', 'could', 'figure', 'out', 'and', 'i', 'wasnt', 'you', 'know', 'i', 'didnt', 'know', 'everything', 'back', 'then', 'either', 'and', 'they', 'start', 'to', 'apply', 'this', 'stuff', 'and', 'then', 'built', 'theyll', 'help', 'me', 'build', 'up', 'my', 'own', 'personal', 'power', 'so', 'that', 'you', 'know', 'i', 'really', 'after', 'i', 'got', 'out', 'of', 'the', 'navy', 'and', 'had', 'all', 'these', 'incredible', 'experiences', 'and', 'responsibilities', 'it', 'wasnt', 'really', 'possible', 'for', 'me', 'to', 'go', 'back', 'into', 'normal', 'life', 'so', 'rca', 'had', 'a', 'plan', 'for', 'me', 'kind', 'of', 'i', 'dont', 'know', 'how', 'i', 'would', 'say', 'but', 'none', 'of', 'us', 'at', 'the', 'time', 'me', 'or', 'in', 'the', 'district', 'vicepresident', 'or', 'the', 'technicians', 'i', 'worked', 'with', 'really', 'had', 'an', 'idea', 'where', 'the', 'situation', 'would', 'go', 'but', 'the', 'complication', 'that', 'was', 'existent', 'that', 'was', 'a', 'problem', 'for', 'all', 'of', 'us', 'is', 'that', 'hf', 'and', 'medium', 'frequency', 'radio', 'was', 'being', 'superseded', 'by', 'the', 'satellites', 'and', 'rca', 'needed', 'to', 'come', 'up', 'with', 'some', 'kind', 'of', 'advancement', 'beyond', 'that', 'that', 'would', 'keep', 'those', 'technologies', 'operational', 'so', 'at', 'that', 'point', 'everything', 'was', 'turned', 'over', 'to', 'me', 'the', 'corporation', 'died', 'a', 'couple', 'of', 'years', 'so', 'my', 'position', 'in', 'the', 'company', 'never', 'transpired', 'and', 'and', 'then', 'diane', 'feinstein', 'converted', 'san', 'francisco', 'at', 'that', 'time', 'and', 'so', 'all', 'my', 'equipment', 'was', 'smashed', 'and', 'the', 'whole', 'neighborhood', 'was', 'bulldozed', 'so', 'i', 'became', 'a', 'street', 'person', 'i', 'lived', 'out', 'of', 'garbage', 'cans', 'for', 'years', 'so', 'in', 'that', 'process', 'then', 'i', 'can', 'no', 'longer', 'use', 'equipment', 'so', 'it', 'was', 'time', 'to', 'learn', 'mathematics', 'so', 'and', 'i', 'lived', 'in', 'the', 'bushes', 'outside', 'of', 'somebodys', 'house', 'that', 'turned', 'out', 'to', 'be', 'follow', 'forints', 'werth', 'the', 'third', 'of', 'the', 'son', 'of', 'the', 'inventor', 'of', 'television', 'and', 'that', 'created', 'a', 'big', 'shift', 'right', 'there', 'because', 'then', 'family', 'secrets', 'had', 'never', 'been', 'revealed', 'to', 'the', 'public', 'or', 'revealed', 'to', 'me', 'how', 'this', 'guy', 'made', 'radio', 'tubes', 'have', 'powered', 'themselves', 'and', 'actually', 'helped', 'the', 'things', 'in', 'my', 'hand', 'it', 'was', 'a', 'joke', 'actually', 'by', 'fiveo', 'he', 'didnt', 'think', 'i', 'could', 'figure', 'him', 'out', 'and', 'and', 'on', 'top', 'of', 'that', 'i', 'was', 'related', 'with', 'rca', 'which', 'was', 'an', 'enemy', 'of', 'the', 'farnsworth', 'family', 'so', 'but', 'when', 'i', 'explained', 'to', 'him', 'how', 'the', 'tube', 'work', 'that', 'id', 'never', 'seen', 'before', 'he', 'was', 'thrown', 'back', 'at', 'his', 'chair', 'and', 'the', 'family', 'adopted', 'me', 'and', 'so', 'that', 'kind', 'of', 'helped', 'me', 'learn', 'new', 'things', 'and', 'keep', 'going', 'and', 'then', 'because', 'it', 'was', 'only', 'math', 'there', 'was', 'no', 'more', 'parts', 'he', 'gave', 'me', 'a', 'couple', 'of', 'very', 'important', 'math', 'books', 'then', 'i', 'discovered', 'that', 'a', 'lot', 'of', 'the', 'stuff', 'that', 'was', 'taught', 'to', 'me', 'by', 'rca', 'historically', 'and', 'technically', 'left', 'out', 'some', 'very', 'important', 'details', 'and', 'that', 'all', 'landed', 'right', 'on', 'top', 'of', 'nikola', 'tesla', 'so', 'i', 'got', 'a', 'the', 'best', 'biography', 'for', 'nikola', 'tesla', 'the', 'one', 'by', 'jj', 'oneil', 'prodigal', 'genius', 'and', 'i', 'started', 'reading', 'through', 'that', 'and', 'i', 'couldnt', 'stop', 'i', 'read', 'the', 'whole', 'thing', 'from', 'front', 'to', 'back', 'until', 'the', 'library', 'closed', 'it', 'left', 'me', 'so', 'nearsighted', 'i', 'could', 'far', 'literally', 'find', 'my', 'way', 'out', 'of', 'the', 'library', 'from', 'all', 'reading', 'the', 'whole', 'book', 'and', 'that', 'transformed', 'me', 'forever', 'because', 'then', 'i', 'realized', 'that', 'i', 'didnt', 'know', 'everything', 'about', 'electricity', 'and', 'nobody', 'knew', 'everything', 'about', 'electricity', 'and', 'really', 'nobody', 'knew', 'anything', 'about', 'electricity', 'and', 'there', 'was', 'new', 'things', 'to', 'be', 'discovered', 'and', 'then', 'later', 'on', 'all', 'the', 'notes', 'and', 'diagrams', 'that', 'i', 'drew', 'on', 'benches', 'you', 'know', 'and', 'in', 'coffee', 'shops', 'and', 'all', 'that', 'living', 'on', 'the', 'street', 'starting', 'to', 'get', 'out', 'in', 'public', 'this', 'borderlands', 'sciences', 'thing', 'latched', 'onto', 'it', 'and', 'then', 'i', 'developed', 'some', 'kind', 'of', 'popularity', 'through', 'that', 'and', 'then', 'i', 'started', 'to', 'get', 'funded', 'to', 'do', 'things', 'and', 'then', 'the', 'things', 'i', 'got', 'funded', 'to', 'do', 'got', 'destroyed', 'and', 'then', 'i', 'got', 'funded', 'to', 'other', 'things', 'and', 'then', 'those', 'things', 'got', 'destroyed', 'and', 'it', 'just', 'kept', 'going', 'on', 'until', 'recently', 'everything', 'was', 'destroyed', 'my', 'car', 'was', 'vandalized', 'my', 'coyote', 'was', 'taken', 'away', 'from', 'my', 'installation', 'was', 'i', 'dont', 'i', 'still', 'dont', 'know', 'whats', 'going', 'on', 'there', 'i', 'need', 'somebody', 'investigate', 'it', 'so', 'it', 'all', 'took', 'the', 'big', 'squat', 'and', 'i', 'was', 'left', 'completely', 'destitute', 'in', 'the', 'desert', 'yeah', 'with', 'nowhere', 'to', 'go', 'and', 'sabotage', 'car', 'and', 'no', 'money', 'and', 'and', 'you', 'know', 'so', 'i', 'had', 'to', 'get', 'on', 'the', 'the', 'welfare', 'which', 'normally', 'you', 'cant', 'do', 'but', 'i', 'was', 'able', 'to', 'do', 'there', 'and', 'then', 'i', 'started', 'hanging', 'out', 'with', 'some', 'people', 'in', 'the', 'museum', 'that', 'read', 'a', 'lot', 'and', 'wanted', 'to', 'know', 'about', 'this', 'stuff', 'and', 'so', 'we', 'started', 'having', 'these', 'little', 'thursday', 'morning', 'gettogethers', 'and', 'then', 'that', 'got', 'me', 'inspired', 'to', 'start', 'writing', 'stuff', 'and', 'that', 'started', 'this', 'whole', 'series', 'on', 'energetic', 'form', 'that', 'led', 'to', 'and', 'were', 'were', 'sitting', 'right', 'now', 'so', 'thats', 'kind', 'of', 'the', 'life', 'story', 'very', 'doll', 'work', 'with', 'lots', 'of', 'giant', 'holes', 'and', 'can', 'you', 'tell', 'us', 'a', 'little', 'bit', 'about', 'your', 'new', 'book', 'on', 'polyphase', 'mathematics', 'i', 'believe', 'it', 'is', 'posted', 'on', 'the', 'energetic', 'form', 'well', 'its', 'starting', 'to', 'get', 'posted', 'on', 'the', 'energetic', 'form', 'but', 'its', 'a', 'massive', 'project', 'because', 'theres', 'theres', 'over', '2000', 'equations', 'in', 'this', 'book', 'so', 'what', 'what', 'came', 'about', 'is', 'is', 'is', 'a', 'popular', 'lecture', 'was', 'requested', 'of', 'me', 'to', 'be', 'presented', 'oh', 'i', 'think', 'like', 'last', 'june', 'thats', 'july', 'and', 'this', 'was', 'like', 'several', 'months', 'in', 'advance', 'and', 'i', 'didnt', 'know', 'if', 'i', 'wanted', 'to', 'do', 'it', 'you', 'know', 'i', 'was', 'in', 'a', 'situation', 'where', 'people', 'were', 'screwing', 'me', 'up', 'again', 'it', 'was', 'kind', 'of', 'another', 'quasi', 'kidnapping', 'thing', 'i', 'got', 'tricked', 'into', 'something', 'that', 'you', 'know', 'these', 'people', 'are', 'going', 'to', 'support', 'me', 'and', 'then', 'they', 'know', 'now', 'theyre', 'defaming', 'me', 'on', 'the', 'internet', 'and', 'all', 'that', 'and', 'in', 'the', 'middle', 'of', 'that', 'crisis', 'i', 'was', 'requested', 'to', 'produce', 'some', 'lecture', 'at', 'that', 'point', 'i', 'really', 'have', 'no', 'tristan', 'in', 'much', 'writing', 'anything', 'anymore', 'but', 'but', 'i', 'decided', 'to', 'go', 'about', 'it', 'and', 'then', 'so', 'i', 'didnt', 'know', 'how', 'to', 'to', 'start', 'this', 'thing', 'and', 'then', 'so', 'publicly', 'was', 'requested', 'of', 'me', 'as', 'people', 'wanted', 'to', 'know', 'about', 'my', 'four', 'quadrant', 'theory', 'of', 'electricity', 'so', 'i', 'tried', 'to', 'figure', 'how', 'its', 'going', 'to', 'start', 'this', 'and', 'then', 'then', 'once', 'i', 'picked', 'up', 'the', 'trail', 'it', 'almost', 'became', 'a', 'daily', 'obsession', 'i', 'spent', '8', 'hours', 'a', 'day', 'on', 'it', 'for', 'about', 'four', 'or', 'five', 'months', 'and', 'after', 'i', 'gave', 'the', 'talk', 'it', 'kept', 'going', 'and', 'it', 'turned', 'into', 'this', 'book', 'the', 'four', 'quadrant', 'representation', 'of', 'electricity', 'and', 'then', 'in', 'the', 'process', 'of', 'trying', 'to', 'explain', 'things', 'in', 'terms', 'that', 'anybody', 'could', 'understand', 'ive', 'learned', 'all', 'kinds', 'of', 'fascinating', 'things', 'and', 'then', 'theres', 'another', 'project', 'im', 'working', 'on', 'with', 'relations', 'a', 'particular', 'type', 'of', 'interference', 'its', 'being', 'generated', 'by', 'the', 'power', 'company', 'and', 'a', 'number', 'of', 'papers', 'have', 'requested', 'me', 'to', 'that', 'and', 'i', 'go', 'okay', 'well', 'its', 'time', 'for', 'me', 'to', 'go', 'back', 'to', 'something', 'that', 'i', 'got', 'i', 'learned', 'in', 'high', 'school', 'and', 'i', 'wrote', 'papers', 'on', 'a', 'long', 'time', 'ago', 'about', 'imaginary', 'number', 'is', 'this', 'lets', 'lets', 'take', 'this', 'thing', 'the', 'whole', 'way', 'and', 'and', 'it', 'just', 'kept', 'going', 'and', 'i', 'may', 'make', 'more', 'discoveries', 'and', 'and', 'until', 'now', 'basically', 'ive', 'written', 'a', 'book', 'on', 'the', 'complex', 'verse', 'or', 'algebra', 'and', 'imaginary', 'numbers', 'and', 'and', 'alternating', 'current', 'that', 'has', 'never', 'been', 'done', 'before', 'wow', 'that', 'is', 'phenomenal', 'erica', 'start', 'it', 'started', 'off', 'steinmetz', 'was', 'pretty', 'much', 'the', 'end', 'of', 'the', 'classical', 'mathematics', 'for', 'electricity', 'but', 'the', 'tesla', 'polyface', 'has', 'some', 'really', 'defies', 'conventional', 'mathematical', 'analysis', 'thats', 'the', 'problem', 'and', 'a', 'westinghouse', 'engineer', 'by', 'the', 'name', 'of', 'dr', 'fortescue', 'came', 'up', 'with', 'the', 'system', 'of', 'mathematics', 'that', 'as', 'far', 'as', 'the', 'science', 'of', 'algebra', 'goes', 'should', 'have', 'been', 'an', 'international', 'hit', 'but', 'because', 'it', 'was', 'an', 'engineer', 'and', 'an', 'american', 'engineer', 'it', 'was', 'ignored', 'except', 'by', 'the', 'american', 'engineering', 'people', 'the', 'industry', 'and', 'what', 'have', 'you', 'and', 'they', 'found', 'through', 'this', 'guys', 'mathematics', 'you', 'can', 'finally', 'define', 'polyphase', 'power', 'systems', 'but', 'the', 'mathematics', 'that', 'he', 'wrote', 'was', 'so', 'confusing', 'and', 'generalized', 'and', 'people', 'wrote', 'books', 'on', 'it', 'and', 'they', 'didnt', 'understand', 'what', 'was', 'happening', 'and', 'im', 'stuck', 'in', 'a', 'situation', 'where', 'where', 'i', 'have', 'to', 'make', 'a', 'engineering', 'reports', 'and', 'present', 'them', 'to', 'the', 'government', 'they', 'cant', 'be', 'wishywashy', 'so', 'i', 'have', 'to', 'go', 'back', 'and', 'revamp', 'the', 'whole', 'thing', 'in', 'the', 'end', 'and', 'take', 'it', 'to', 'a', 'level', 'that', 'no', 'one', 'had', 'ever', 'taken', 'it', 'before', 'and', 'it', 'ready', 'i', 'just', 'got', 'me', 'all', 'excited', 'and', 'im', 'not', 'done', 'with', 'it', 'yet', 'but', 'but', 'the', 'theoretical', 'end', 'is', 'done', 'and', 'itll', 'all', 'be', 'because', 'its', 'like', 'trying', 'to', 'squeeze', 'an', 'elephant', 'through', 'a', 'quarter', 'inch', 'hole', 'itll', 'come', 'out', 'on', 'the', 'internet', 'over', 'some', 'period', 'of', 'time', 'pretty', 'much', 'who', 'do', 'you', 'have', 'as', 'a', 'supporter', 'i', 'mean', 'there', 'is', 'a', 'lot', 'of', 'work', 'that', 'you', 'put', 'on', 'yourself', 'and', 'obviously', 'it', 'takes', 'you', 'know', 'a', 'lot', 'of', 'effort', 'resources', 'and', 'something', 'like', 'that', 'do', 'you', 'have', 'assistants', 'followers', 'you', 'know', 'that', 'theyre', 'working', 'close', 'to', 'you', 'i', 'have', 'one', 'person', 'whos', 'in', 'his', 'late', '20s', 'and', 'he', 'likes', 'to', 'climb', 'telephone', 'poles', 'and', 'dig', 'holes', 'and', 'do', 'all', 'that', 'kind', 'of', 'stuff', 'and', 'build', 'things', 'and', 'and', 'be', 'part', 'of', 'all', 'this', 'so', 'between', 'the', 'two', 'of', 'us', 'and', 'our', 'toyota', 'vehicles', 'we', 'go', 'out', 'there', 'into', 'the', 'wilderness', 'and', 'and', 'tackle', 'this', 'whole', 'thing', 'and', 'thats', 'really', 'all', 'pretty', 'much', 'all', 'we', 'need', 'its', 'just', 'a', 'matter', 'if', 'you', 'know', 'somebody', 'paying', 'for', 'the', 'gas', 'and', 'and', 'all', 'that', 'okay', 'you', 'already', 'had', 'some', 'kind', 'of', 'results', 'you', 'know', 'in', 'measurements', 'that', 'kind', 'of', 'showed', 'your', 'work', 'and', 'direction', 'in', 'which', 'youre', 'going', 'you', 'know', 'is', 'that', 'something', 'you', 'know', 'that', 'can', 'convince', 'certain', 'investors', 'you', 'know', 'to', 'push', 'your', 'work', 'you', 'know', 'to', 'limit', 'that', 'you', 'can', 'do', 'a', 'little', 'bit', 'maybe', 'faster', 'or', 'more', 'comfortable', 'well', 'i', 'dont', 'know', 'you', 'know', 'ultimately', 'most', 'of', 'the', 'people', 'that', 'are', 'donated', 'to', 'this', 'dont', 'fully', 'understand', 'you', 'know', 'all', 'the', 'math', 'and', 'engineering', 'of', 'it', 'that', 'couldnt', 'be', 'expected', 'the', 'people', 'that', 'do', 'you', 'know', 'or', 'most', 'of', 'these', 'physicists', 'and', 'all', 'that', 'stuff', 'and', 'they', 'have', 'this', 'einstein', 'religion', 'that', 'you', 'know', 'they', 'freaked', 'out', 'so', 'those', 'people', 'will', 'not', 'support', 'you', 'theyll', 'figure', 'out', 'a', 'way', 'to', 'screw', 'you', 'up', 'so', 'i', 'dont', 'know', 'you', 'know', 'the', 'thing', 'is', 'im', 'stuck', 'in', 'a', 'certain', 'way', 'right', 'now', 'where', 'i', 'was', 'told', 'i', 'was', 'going', 'to', 'be', 'provided', 'with', 'the', 'building', 'and', 'only', 'to', 'be', 'taken', 'away', 'from', 'me', 'in', 'several', 'months', 'it', 'was', 'a', 'lie', 'and', 'i', 'dont', 'know', 'how', 'to', 'get', 'out', 'of', 'that', 'if', 'i', 'lose', 'my', 'building', 'its', 'going', 'to', 'make', 'it', 'tough', 'were', 'going', 'to', 'have', 'to', 'do', 'all', 'this', 'stuff', 'out', 'with', 'automobiles', 'but', 'just', 'fine', 'ive', 'done', 'that', 'before', 'but', 'its', 'going', 'to', 'make', 'it', 'difficult', 'plus', 'all', 'the', 'accumulated', 'material', 'is', 'going', 'to', 'get', 'lost', 'so', 'its', 'another', 'ransom', 'situation', 'and', 'it', 'will', 'probably', 'you', 'know', 'the', 'ransom', 'demand', 'will', 'be', 'between', 'seventy', 'and', 'a', 'hundred', 'thousand', 'dollars', 'in', 'order', 'to', 'keep', 'my', 'building', 'and', 'this', 'is', 'going', 'to', 'be', 'you', 'know', 'an', 'issue', 'thats', 'going', 'to', 'be', 'coming', 'up', 'here', 'in', 'about', 'four', 'or', 'five', 'months', 'but', 'right', 'now', 'you', 'know', 'from', 'the', 'government', 'and', 'ive', 'been', 'advised', 'to', 'ignore', 'that', 'pay', 'no', 'attention', 'to', 'it', 'and', 'just', 'blaze', 'forward', 'on', 'this', 'project', 'and', 'worry', 'about', 'whats', 'going', 'to', 'happen', 'later', 'so', 'thats', 'basically', 'what', 'were', 'doing', 'but', 'at', 'some', 'point', 'i', 'have', 'got', 'this', 'sort', 'of', 'damocles', 'hanging', 'over', 'my', 'head', 'thats', 'got', 'all', 'of', 'a', 'sudden', 'completely', 'disrupt', 'the', 'whole', 'deal', 'and', 'then', 'all', 'in', 'all', 'because', 'you', 'know', 'ive', 'got', 'you', 'know', 'what', 'the', 'person', 'i', 'talked', 'to', 'helping', 'me', 'and', 'then', 'its', 'another', 'guy', 'about', 'the', 'same', 'age', 'that', 'you', 'know', 'now', 'its', 'gone', 'forward', 'and', 'out', 'of', 'his', 'own', 'pocket', 'you', 'know', 'has', 'is', 'putting', 'together', 'the', 'socalled', 'tesla', 'magnifying', 'transmitter', 'in', 'the', 'cosmic', 'induction', 'generator', 'and', 'you', 'know', 'and', 'he', 'needs', 'some', 'kind', 'of', 'financial', 'backup', 'i', 'mean', 'so', 'basically', 'just', 'to', 'break', 'ground', 'were', 'looking', 'at', 'the', 'director', 'of', 'the', 'organization', 'says', 'two', 'hundred', 'and', 'fifty', 'thousand', 'dollars', 'to', 'make', 'a', 'real', 'laboratory', 'for', 'eric', 'dollar', 'that', 'just', 'has', 'the', 'basic', 'stuff', 'of', 'the', 'you', 'know', 'fighting', 'with', 'the', 'power', 'company', 'and', 'trying', 'to', 'get', 'the', 'right', 'power', 'anymore', 'its', 'nearly', 'impossible', 'thats', 'thats', 'one', 'of', 'the', 'things', 'that', 'instigated', 'the', 'writing', 'of', 'this', 'this', 'ac', 'mathematics', 'paper', 'because', 'i', 'have', 'to', 'prove', 'that', 'the', 'whole', 'electrical', 'grid', 'of', 'the', 'united', 'states', 'is', 'going', 'in', 'the', 'retrograde', 'and', 'its', 'either', 'going', 'to', 'turn', 'into', 'an', 'emp', 'generator', 'or', 'an', 'emp', 'receiver', 'and', 'everything', 'is', 'going', 'to', 'take', 'a', 'squat', 'so', 'for', 'people', 'that', 'are', 'watching', 'this', 'you', 'know', 'beside', 'you', 'know', 'financial', 'power', 'is', 'anything', 'else', 'you', 'know', 'that', 'you', 'need', 'and', 'somebody', 'that', 'could', 'watch', 'this', 'you', 'know', 'can', 'get', 'back', 'to', 'you', 'and', 'touch', 'and', 'kind', 'of', 'support', 'your', 'work', 'and', 'help', 'you', 'what', 'youre', 'doing', 'is', 'anybody', 'that', 'buys', 'my', 'papers', 'or', 'books', 'or', 'videos', 'or', 'any', 'of', 'that', 'that', 'goes', 'in', 'basically', 'paying', 'the', 'utilities', 'and', 'the', 'operating', 'expenses', 'to', 'keep', 'this', 'building', 'going', 'and', 'that', 'you', 'know', 'its', 'like', 'a', 'tick', 'in', 'my', 'neck', 'the', 'size', 'of', 'a', 'football', 'the', 'way', 'i', 'live', 'im', 'used', 'to', 'you', 'know', 'i', 'live', 'on', 'my', 'souls', 'and', 'security', 'in', 'my', 'toyota', 'corolla', 'and', 'the', 'bushes', 'the', 'expenses', 'are', 'very', 'low', 'and', 'all', 'of', 'a', 'sudden', 'i', 'got', 'robbed', 'roped', 'into', 'this', 'situation', 'that', 'i', 'cant', 'afford', 'so', 'its', 'fortunate', 'that', 'that', 'people', 'are', 'buying', 'the', 'material', 'and', 'the', 'videos', 'that', 'ive', 'made', 'because', 'otherwise', 'the', 'lights', 'are', 'gonna', 'get', 'turned', 'off', 'as', 'i', 'said', 'you', 'know', 'me', 'being', 'you', 'know', 'the', 'person', 'who', 'is', 'a', 'really', 'uncomfortable', 'you', 'know', 'with', 'that', 'rattling', 'living', 'in', 'california', 'and', 'fearing', 'you', 'know', 'that', 'big', 'one', 'thats', 'supposed', 'to', 'come', 'i', 'think', 'you', 'know', 'absolutely', 'were', 'needed', 'you', 'know', 'this', 'type', 'of', 'discovery', 'to', 'be', 'resolved', 'because', 'obviously', 'it', 'should', 'be', 'some', 'kind', 'of', 'weight', 'predicting', 'these', 'disasters', 'that', 'happen', 'the', 'northridge', 'earthquake', 'that', 'was', 'i', 'believe', 'i', 'wasnt', 'at', 'the', 'station', 'at', 'the', 'time', 'but', 'the', 'people', 'were', 'there', 'said', 'there', 'was', 'an', '18hour', 'notice', 'on', 'that', 'one', 'the', 'landers', 'earthquake', 'oddly', 'enough', 'the', 'beginnings', 'of', 'the', 'station', 'there', 'in', 'landers', 'that', 'i', 'built', 'and', 'of', 'course', 'it', 'was', 'on', 'the', 'epicenter', 'didnt', 'need', 'a', 'lot', 'of', 'fancy', 'equipment', 'then', 'and', 'that', 'was', 'another', '18', 'the', '24', 'hour', 'warning', 'from', 'what', 'i', 'understand', 'from', 'the', 'people', 'there', 'plus', 'i', 'picked', 'that', 'one', 'up', 'at', 'my', 'station', 'in', 'bolinas', 'and', 'on', 'a', 'longdistance', 'path', 'through', 'the', 'honest', 'fear', 'which', 'at', 'landers', 'is', 'the', 'same', 'thing', 'i', 'picked', 'up', 'from', 'japan', '48', 'hours', 'before', 'that', 'earthquake', 'occurred', 'so', 'its', 'its', 'pretty', 'definite', 'now', 'that', 'these', 'electrostatic', 'waves', 'and', 'earthquakes', 'are', 'tied', 'together', 'and', 'i', 'know', 'the', 'details', 'of', 'it', 'the', 'station', 'at', 'landers', 'was', 'not', 'an', 'experimental', 'station', 'it', 'was', 'an', 'engineered', 'station', 'designed', 'to', 'serve', 'the', 'southern', 'california', 'area', 'another', 'station', 'needed', 'to', 'go', 'up', 'and', 'it', 'was', 'mainly', 'for', 'the', 'southern', 'california', 'gas', 'company', 'and', 'la', 'department', 'of', 'water', 'and', 'power', 'its', 'not', 'something', 'you', 'advertise', 'and', 'you', 'dont', 'get', 'on', 'the', 'internet', 'like', 'chicken', 'little', 'and', 'scream', 'you', 'know', 'that', 'the', 'ground', 'is', 'going', 'to', 'bust', 'open', 'day', 'after', 'tomorrow', 'thatd', 'be', 'a', 'stupid', 'thing', 'to', 'do', 'if', 'you', 'make', 'more', 'of', 'a', 'disaster', 'than', 'the', 'earthquake', 'but', 'that', 'station', 'is', 'destroyed', 'and', 'because', 'one', 'and', 'a', 'half', 'million', 'dollars', 'to', 'put', 'something', 'like', 'that', 'up', 'again', 'in', 'southern', 'california', 'and', 'statistically', 'the', 'next', 'big', 'earthquake', 'statistics', 'are', 'dangerous', 'the', 'fullwidth', 'as', 'far', 'as', 'prediction', 'but', 'statistically', 'the', 'next', 'big', 'california', 'earthquake', 'will', 'be', 'in', 'southern', 'california', 'it', 'will', 'not', 'be', 'in', 'northern', 'california', 'and', 'it', 'will', 'happen', 'within', 'the', 'next', 'four', 'or', 'five', 'years', 'and', 'in', 'general', 'earthquakes', 'since', 'the', 'indonesia', 'one', 'have', 'become', '10', 'decibels', 'stronger', 'so', 'what', 'used', 'to', 'be', 'a', 'seven', 'is', 'going', 'to', 'be', 'an', 'eight', 'and', 'what', 'used', 'to', 'be', 'an', 'eight', 'is', 'going', 'to', 'be', 'a', 'nine', 'and', 'you', 'know', 'and', 'you', 'know', 'the', 'us', 'geological', 'survey', 'is', 'not', 'making', 'anything', 'that', 'works', 'and', 'its', 'going', 'to', 'make', 'sure', 'that', 'anything', 'that', 'does', 'work', 'doesnt', 'work', 'and', 'its', '15', 'million', 'dollars', 'and', 'im', '62', 'years', 'old', 'and', 'i', 'dont', 'have', '30', 'years', 'to', 'make', 'another', 'one', 'anymore', 'so', 'these', 'are', 'all', 'the', 'parameters', 'of', 'the', 'situation', 'let', 'me', 'ask', 'you', 'something', 'i', 'mean', 'the', 'same', 'situation', 'was', 'with', 'tesla', 'you', 'know', 'that', 'the', 'amount', 'of', 'ideas', 'and', 'discoveries', 'you', 'know', 'his', 'body', 'couldnt', 'carry', 'that', 'long', 'where', 'we', 'can', 'meet', 'you', 'where', 'we', 'can', 'talk', 'to', 'you', 'face', 'to', 'face', 'how', 'do', 'you', 'pretty', 'much', 'engage', 'with', 'the', 'people', 'who', 'wants', 'to', 'know', 'more', 'and', 'you', 'know', 'basically', 'to', 'get', 'in', 'touch', 'with', 'you', 'well', 'after', 'the', 'tech', 'saavy', 'episode', 'there', 'wont', 'be', 'any', 'more', 'face', 'to', 'face', 'its', 'the', 'basic', 'thing', 'to', 'do', 'is', 'i', 'have', 'a', 'general', 'delivery', 'address', 'because', 'in', 'the', 'eastern', 'sierras', 'theres', 'a', 'lot', 'of', 'people', 'that', 'live', 'way', 'up', 'in', 'those', 'mountains', 'and', 'they', 'come', 'down', 'every', 'one', 'or', 'two', 'months', 'for', 'their', 'mail', 'its', 'amazing', 'you', 'know', 'theres', 'people', 'that', 'walk', 'hundreds', 'and', 'hundreds', 'of', 'miles', 'up', 'in', 'those', 'mountains', 'and', 'then', 'they', 'come', 'down', 'to', 'these', 'towns', 'so', 'so', 'being', 'that', 'im', 'one', 'of', 'those', 'kind', 'of', 'creatures', 'i', 'have', 'a', 'postoffice', 'receptacle', 'in', 'lone', 'pine', 'california', 'and', 'the', 'best', 'thing', 'to', 'do', 'is', 'to', 'write', 'me', 'yeah', 'thats', 'about', 'this', 'whats', 'about', 'this', 'energy', 'science', 'technology', 'conference', 'okay', 'now', 'thats', 'going', 'to', 'where', 'im', 'going', 'to', 'switch', 'over', 'the', 'ac', 'thing', 'id', 'like', 'to', 'keep', 'working', 'on', 'that', 'but', 'but', 'at', 'any', 'rate', 'i', 'have', 'to', 'come', 'up', 'with', 'a', 'new', 'topic', 'and', 'so', 'what', 'im', 'going', 'to', 'do', 'is', 'im', 'going', 'to', 'get', 'into', 'the', 'theoretical', 'and', 'practical', 'details', 'of', 'this', 'whole', 'test', 'law', 'and', 'alexander', 'sen', 'and', 'all', 'of', 'this', 'type', 'of', 'radio', 'that', 'does', 'not', 'involve', 'electromagnetic', 'waves', 'and', 'does', 'not', 'involve', 'the', 'speed', 'of', 'light', 'and', 'of', 'course', 'the', 'telluric', 'system', 'you', 'know', 'for', 'advanced', 'seismic', 'warning', 'or', 'submarine', 'communications', 'or', 'talking', 'to', 'ships', 'or', 'whatever', 'it', 'might', 'be', 'is', 'all', 'based', 'on', 'this', 'so', 'that', 'process', 'the', 'seed', 'just', 'sprouted', 'on', 'it', 'about', 'a', 'month', 'ago', 'and', 'its', 'hard', 'in', 'the', 'beginning', 'to', 'say', 'exactly', 'how', 'its', 'going', 'to', 'go', 'because', 'its', 'going', 'to', 'be', 'you', 'know', 'its', 'going', 'to', 'pretty', 'soon', 'here', 'its', 'going', 'to', 'light', 'off', 'to', 'eight', 'hours', 'a', 'day', 'of', 'writing', 'so', 'its', 'a', 'complicated', 'subject', 'its', 'not', 'going', 'to', 'be', 'like', 'the', 'last', 'one', 'you', 'know', 'where', 'its', 'all', 'historical', 'and', 'you', 'know', 'and', 'you', 'see', 'pictures', 'of', 'ancient', 'greeks', 'like', 'plato', 'you', 'know', 'is', 'it', 'just', 'a', 'beautiful', 'you', 'know', 'coastal', 'towns', 'in', 'greece', 'its', 'going', 'to', 'be', 'more', 'you', 'know', 'complicated', 'relationships', 'and', 'and', 'a', 'lot', 'of', 'it', 'is', 'going', 'to', 'be', 'explanations', 'of', 'what', 'i', 'have', 'already', 'written', 'in', 'what', 'i', 'call', 'the', 'rca', 'book', 'which', 'is', 'is', 'out', 'under', 'the', 'title', 'wireless', 'giant', 'at', 'the', 'pacific', 'because', 'in', 'my', 'historical', 'resources', 'studied', 'there', 'for', 'the', 'national', 'park', 'service', 'and', 'the', 'the', 'holders', 'of', 'the', 'station', 'license', 'kph', 'as', 'i', 'had', 'discovered', 'what', 'alex', 'anderson', 'had', 'really', 'built', 'there', 'that', 'nobody', 'talked', 'about', 'and', 'and', 'this', 'isnt', 'i', 'mean', 'its', 'a', 'mindboggling', 'electrical', 'system', 'that', 'nobody', 'had', 'ever', 'even', 'talked', 'about', 'before', 'or', 'the', 'theory', 'or', 'any', 'of', 'this', 'type', 'of', 'stuff', 'and', 'so', 'that', 'is', 'as', 'part', 'of', 'the', 'book', 'i', 'wrote', 'is', 'the', 'mathematical', 'and', 'the', 'archaeological', 'study', 'of', 'all', 'that', 'and', 'the', 'diagram', 'so', 'i', 'will', 'be', 'getting', 'into', 'detail', 'explaining', 'the', 'difference', 'between', 'electro', 'magnet', 'magnetic', 'transmission', 'like', 'rca', 'used', 'and', 'we', 'use', 'now', 'of', 'the', 'tesla', 'transmission', 'the', 'alexandrian', 'system', 'and', 'some', 'of', 'the', 'even', 'earlier', 'systems', 'that', 'were', 'electrostatic', 'modes', 'of', 'transmission', 'and', 'and', 'explained', 'in', 'such', 'a', 'way', 'that', 'you', 'can', 'understand', 'these', 'things', 'you', 'know', 'what', 'the', 'electrical', 'dimensions', 'are', 'you', 'know', 'why', 'the', 'speed', 'of', 'light', 'is', 'a', 'part', 'of', 'everything', 'thats', 'going', 'on', 'and', 'this', 'actually', 'something', 'was', 'just', 'added', 'on', 'and', 'give', 'a', 'kind', 'of', 'popular', 'level', 'theoretical', 'basis', 'for', 'all', 'this', 'stuff', 'and', 'then', 'theres', 'diagrams', 'of', 'things', 'you', 'know', 'they', 'can', 'actually', 'be', 'assembled', 'that', 'work', 'wow', 'well', 'i', 'speaking', 'of', 'the', 'tesla', 'technology', 'aspect', 'of', 'transmission', 'im', 'a', 'bit', 'curious', 'as', 'to', 'what', 'your', 'opinion', 'is', 'above', 'the', 'actual', 'tower', 'rebuild', 'effort', 'i', 'understand', 'currently', 'that', 'there', 'are', 'some', 'hurdles', 'that', 'unfortunately', 'dont', 'allow', 'for', 'the', 'tower', 'constructed', 'where', 'it', 'was', 'originally', 'intended', 'but', 'one', 'of', 'other', 'potential', 'locations', 'around', 'the', 'world', 'that', 'could', 'potentially', 'rebuild', 'that', 'that', 'effort', 'is', 'there', 'any', 'is', 'there', 'in', 'your', 'personal', 'opinion', 'and', 'expertise', 'have', 'a', 'reserve', 'yeah', 'is', 'there', 'any', 'possibility', 'that', 'that', 'could', 'happen', 'well', 'i', 'dont', 'know', 'i', 'needed', 'something', 'that', 'really', 'belongs', 'to', 'belongs', 'on', 'a', 'navy', 'base', 'somewhere', 'but', 'at', 'any', 'rate', 'we', 'have', 'located', 'an', 'abandoned', 'will', 'not', 'an', 'abandoned', 'but', 'an', 'old', 'navy', 'antenna', 'field', 'thats', 'now', 'somebodys', 'private', 'property', 'and', 'the', 'idea', 'is', 'is', 'to', 'build', 'the', 'the', 'smallscale', 'model', 'of', 'this', 'type', 'of', 'transmission', 'system', 'on', 'the', '160', 'meter', 'hand', 'bam', 'we', 'have', 'the', 'small', 'world', 'war', 'two', 'transmitters', 'that', 'weve', 'been', 'using', 'for', 'the', 'the', 'cosmic', 'induction', 'generator', 'work', 'that', 'will', 'work', 'on', 'that', 'so', 'we', 'have', 'the', 'poles', 'we', 'have', 'enough', 'necessary', 'ground', 'wire', 'we', 'have', 'to', 'make', 'negotiations', 'with', 'the', 'property', 'owner', 'we', 'dont', 'know', 'how', 'thats', 'going', 'to', 'work', 'out', 'yet', 'but', 'it', 'might', 'and', 'so', 'there', 'there', 'are', 'plans', 'to', 'put', 'together', 'a', 'very', 'small', 'scale', 'model', 'of', 'what', 'would', 'have', 'been', 'a', 'wardenclyffe', 'on', 'the', 'san', 'andreas', 'fault', 'in', 'near', 'san', 'francisco', 'and', 'attempt', 'to', 'put', 'a', 'radio', 'beacon', 'of', 'the', 'tesla', 'variety', 'on', 'the', 'air', 'so', 'that', 'you', 'know', 'various', 'people', 'or', 'agencies', 'or', 'whatever', 'can', 'experiment', 'and', 'see', 'the', 'feasibility', 'of', 'using', 'this', 'as', 'a', 'transmission', 'medium', 'so', 'that', 'those', 'plans', 'are', 'underway', 'but', 'all', 'of', 'this', 'stuff', 'takes', 'a', 'lot', 'of', 'time', 'and', 'fooling', 'around', 'and', 'you', 'know', 'and', 'theres', 'everythings', 'in', 'your', 'way', 'theres', 'obviously', 'wherever', 'you', 'go', 'theres', 'somebody', 'that', 'wants', 'to', 'screw', 'it', 'up', 'and', 'the', 'closer', 'you', 'get', 'to', 'the', 'coast', 'its', 'like', 'a', 'potential', 'grading', 'that', 'starts', 'to', 'rise', 'exponentially', 'until', 'when', 'you', 'reach', 'san', 'francisco', 'that', 'grade', 'is', 'infinite', 'and', 'nothing', 'is', 'possible', 'in', 'san', 'francisco', 'why', 'well', 'okay', 'well', 'i', 'guess', 'i', 'would', 'like', 'to', 'add', 'i', 'understand', 'that', 'youre', 'currently', 'engaged', 'in', 'multiple', 'crowdfunding', 'efforts', 'that', 'have', 'essentially', 'helped', 'you', 'grow', 'in', 'such', 'what', 'is', 'your', 'personal', 'opinion', 'of', 'four', 'inventors', 'or', 'any', 'advice', 'that', 'you', 'would', 'give', 'to', 'inventors', 'that', 'pursue', 'you', 'know', 'crowd', 'funding', 'sources', 'versus', 'actually', 'going', 'to', 'the', 'government', 'for', 'supporting', 'things', 'managed', 'well', 'dont', 'go', 'to', 'the', 'government', 'support', 'unless', 'you', 'have', 'friends', 'in', 'the', 'government', 'well', 'i', 'guess', 'that', 'would', 'yeah', 'youre', 'not', 'gonna', 'get', 'anywhere', 'so', 'so', 'the', 'thing', 'is', 'youre', 'gonna', 'have', 'to', 'i', 'mean', 'i', 'dont', 'know', 'like', 'i', 'say', 'for', 'me', 'its', 'a', 'remote', 'thing', 'because', 'the', 'the', 'public', 'funding', 'thing', 'involves', 'all', 'this', 'internet', 'activity', 'you', 'know', 'theres', 'theres', 'people', 'that', 'work', 'on', 'that', 'to', 'put', 'massive', 'quantities', 'of', 'effort', 'into', 'it', 'but', 'its', 'a', 'foreign', 'thing', 'to', 'me', 'i', 'dont', 'in', 'my', 'world', 'i', 'dont', 'see', 'that', 'or', 'know', 'about', 'it', 'so', 'its', 'really', 'hard', 'for', 'me', 'to', 'talk', 'about', 'something', 'that', 'that', 'existed', 'another', 'dimension', 'if', 'you', 'understand', 'what', 'im', 'saying', 'thats', 'also', 'i', 'dont', 'i', 'cant', 'dont', 'really', 'know', 'how', 'to', 'advise', 'people', 'you', 'know', 'first', 'of', 'all', 'youre', 'going', 'to', 'have', 'to', 'come', 'up', 'with', 'something', 'of', 'significance', 'thats', 'worth', 'dealing', 'with', 'they', 'begin', 'with', 'and', 'i', 'dont', 'really', 'see', 'where', 'you', 'know', 'a', 'lot', 'of', 'people', 'didnt', 'even', 'have', 'much', 'of', 'anything', 'going', 'on', 'and', 'so', 'thats', 'kind', 'of', 'a', 'first', 'complication', 'and', 'you', 'know', 'the', 'same', 'dead', 'horse', 'of', 'soviet', 'sailors', 'conspiracy', 'you', 'know', 'that', 'people', 'been', 'whipping', 'on', 'to', 'the', 'point', 'where', 'theres', 'not', 'even', 'a', 'skeleton', 'left', 'and', 'theyre', 'still', 'talking', 'about', 'the', 'same', 'thing', 'well', 'thats', 'a', 'whole', 'level', 'of', 'hopelessness', 'so', 'i', 'i', 'wish', 'there', 'was', 'somebody', 'well', 'actually', 'there', 'are', 'a', 'few', 'people', 'through', 'this', 'the', 'energetic', 'form', 'thing', 'of', 'my', 'writings', 'that', 'are', 'you', 'know', 'presently', 'building', 'this', 'stuff', 'and', 'theyve', 'got', 'successful', 'results', 'you', 'know', 'the', 'light', 'bulb', 'lights', 'up', 'and', 'doesnt', 'light', 'up', 'in', 'the', 'engineering', 'world', 'you', 'dont', 'get', 'paid', 'in', 'the', 'end', 'so', 'they', 'got', 'it', 'that', 'far', 'and', 'so', 'thats', 'encouraging', 'more', 'and', 'more', 'people', 'seem', 'to', 'be', 'learning', 'how', 'to', 'build', 'and', 'do', 'this', 'stuff', 'and', 'make', 'it', 'work', 'they', 'dont', 'particularly', 'need', 'a', 'lot', 'of', 'money', 'you', 'know', 'theyre', 'just', 'fooling', 'around', 'with', 'small', 'coils', 'and', 'stuff', 'and', 'models', 'i', 'mean', 'it', 'would', 'be', 'nice', 'if', 'somehow', 'you', 'know', 'they', 'had', 'some', 'level', 'to', 'support', 'that', 'the', 'problem', 'is', 'you', 'know', 'its', 'pretty', 'much', 'most', 'people', 'because', 'they', 'have', 'these', 'lifestyles', 'that', 'consume', 'money', 'you', 'know', 'they', 'have', 'to', 'go', 'out', 'and', 'work', 'for', 'their', 'lifestyles', 'to', 'the', 'point', 'where', 'theres', 'no', 'money', 'left', 'over', 'and', 'theres', 'no', 'time', 'left', 'over', 'so', 'i', 'dont', 'know', 'how', 'they', 'can', 'get', 'out', 'of', 'that', 'so', 'i', 'really', 'dont', 'know', 'what', 'kind', 'of', 'advice', 'to', 'give', 'people', 'you', 'know', 'when', 'theres', 'all', 'these', 'different', 'situations', 'against', 'it', 'yeah', 'that', 'is', 'unfortunate', 'well', 'were', 'very', 'happy', 'for', 'your', 'progress', 'eric', 'and', 'i', 'definitely', 'would', 'like', 'to', 'know', 'of', 'what', 'would', 'like', 'to', 'invite', 'you', 'out', 'to', 'the', 'energy', 'independence', 'celebration', 'that', 'happens', 'every', 'july', 'to', 'celebrate', 'nikola', 'teslas', 'birthday', 'i', 'will', 'talk', 'to', 'more', 'about', 'that', 'i', 'suppose', 'after', 'the', 'show', 'but', 'im', 'very', 'curious', 'about', 'your', 'own', 'opinion', 'of', 'this', 'idea', 'of', 'energy', 'independence', 'and', 'how', 'long', 'off', 'do', 'you', 'believe', 'that', 'to', 'be', 'a', 'reality', 'for', 'everyone', 'like', 'what', 'do', 'we', 'what', 'hurdles', 'do', 'you', 'feel', 'are', 'there', 'and', 'how', 'long', 'away', 'do', 'you', 'think', 'that', 'we', 'will', 'have', 'a', 'fully', 'independent', 'sustainable', 'energy', 'distinction', 'well', 'are', 'you', 'talking', 'about', 'like', 'the', 'socalled', 'free', 'energy', 'or', 'energy', 'synthesis', 'or', 'or', 'more', 'like', 'solar', 'panels', 'and', 'and', 'windmills', 'can', 'you', 'clarify', 'that', 'well', 'i', 'suppose', 'more', 'so', 'along', 'the', 'lines', 'of', 'generalized', 'breakthrough', 'attention', 'well', 'the', 'whole', 'socalled', 'free', 'energy', 'thing', 'is', 'ive', 'kind', 'of', 'dropped', 'that', 'deal', 'because', 'it', 'i', 'dont', 'i', 'dont', 'have', 'an', 'ac', 'laboratory', 'anymore', 'i', 'dont', 'know', 'where', 'i', 'could', 'find', 'the', 'parts', 'or', 'how', 'i', 'could', 'afford', 'it', 'so', 'i', 'pretty', 'much', 'had', 'to', 'drop', 'all', 'my', 'my', 'alternating', 'current', 'power', 'work', 'there', 'is', 'an', 'in', 'the', 'same', 'neighborhood', 'thats', 'thats', 'putting', 'together', 'the', 'what', 'i', 'call', 'the', 'long', 'lines', 'project', 'with', 'the', 'telephone', 'lines', 'and', 'all', 'that', 'there', 'there', 'is', 'a', 'move', 'to', 'acquire', 'the', 'old', 'city', 'substation', 'building', 'that', 'the', 'power', 'company', 'hasnt', 'trashed', 'the', 'interior', 'of', 'yet', 'to', 'do', 'an', 'ac', 'laboratory', 'but', 'it', 'will', 'take', 'you', 'know', 'quite', 'some', 'time', 'to', 'negotiate', 'with', 'the', 'power', 'company', 'and', 'they', 'come', 'up', 'with', 'theyre', 'probably', 'going', 'to', 'want', 'you', 'know', 'like', 'a', 'half', 'a', 'million', 'dollars', 'or', 'a', 'million', 'dollars', 'for', 'the', 'building', 'and', 'all', 'that', 'and', 'that', 'pretty', 'much', 'should', 'be', 'one', 'government', 'agency', 'paying', 'you', 'know', 'another', 'government', 'agency', 'which', 'pays', 'the', 'power', 'come', 'behind', 'it', 'i', 'dont', 'know', 'how', 'i', 'can', 'get', 'back', 'into', 'that', 'kind', 'of', 'work', 'i', 'wrote', 'a', 'number', 'of', 'papers', 'on', 'energy', 'synthesis', 'people', 'done', 'experiments', 'nobody', 'has', 'really', 'come', 'up', 'with', 'anything', 'yet', 'that', 'turns', 'the', 'kilowatt', 'hour', 'and', 'meter', 'backwards', 'of', 'course', 'they', 'dont', 'do', 'that', 'now', 'theyre', 'all', 'smart', 'so', 'you', 'cant', 'figure', 'out', 'what', 'theyre', 'doing', 'and', 'but', 'at', 'any', 'rate', 'you', 'know', 'when', 'when', 'the', 'meter', 'goes', 'backwards', 'then', 'somebodys', 'got', 'something', 'going', 'and', 'and', 'i', 'dont', 'know', 'you', 'know', 'i', 'just', 'thats', 'kind', 'of', 'a', 'lost', 'deal', 'for', 'me', 'and', 'the', 'device', 'i', 'have', 'in', 'my', 'car', 'that', 'does', 'this', 'uses', 'this', 'special', 'vibrator', 'which', 'after', '10', 'years', 'is', 'all', 'worn', 'out', 'so', 'now', 'i', 'dont', 'have', 'that', 'anymore', 'and', 'i', 'dont', 'know', 'where', 'to', 'find', 'the', 'part', 'and', 'all', 'these', 'things', 'are', 'looming', 'up', 'on', 'me', 'fast', 'you', 'know', 'things', 'you', 'know', '20', 'or', '30', 'years', 'have', 'passed', 'and', 'and', 'all', 'my', 'stuffs', 'worn', 'out', 'you', 'know', 'its', 'i', 'cant', 'find', 'the', 'parts', 'to', 'fix', 'things', 'or', 'replace', 'it', 'anymore', 'so', 'i', 'kind', 'of', 'dropped', 'out', 'of', 'all', 'that', 'i', 'understand', 'well', 'i', 'guess', 'for', 'listeners', 'uh', 'for', 'those', 'of', 'you', 'unfamiliar', 'with', 'the', 'work', 'of', 'tesla', 'if', 'you', 'could', 'possibly', 'eric', 'briefly', 'explain', 'to', 'them', 'the', 'difference', 'between', 'the', 'way', 'hertzian', 'waves', 'travel', 'versus', 'tesla', 'waves', 'okay', 'well', 'the', 'secret', 'the', 'teslas', 'transmission', 'system', 'is', 'its', 'mono', 'polar', 'so', 'the', 'electricity', 'thats', 'currently', 'in', 'use', 'uses', 'a', 'number', 'of', 'poles', 'in', 'most', 'peoples', 'education', 'system', 'you', 'learn', 'about', 'plus', 'and', 'minus', 'you', 'know', 'and', 'theres', 'always', 'positive', 'terminal', 'and', 'negative', 'terminal', 'or', 'active', 'lead', 'and', 'ground', 'of', 'course', 'once', 'you', 'get', 'in', 'the', 'three', 'phase', 'and', 'four', 'phase', 'that', 'all', 'goes', 'away', 'but', 'its', 'still', 'multi', 'terminal', 'but', 'tesla', 'came', 'up', 'with', 'an', 'electrical', 'system', 'has', 'only', 'one', 'phase', 'so', 'if', 'you', 'want', 'to', 'transmit', 'it', 'in', 'the', 'ground', 'then', 'the', 'ground', 'see', 'active', 'terminal', 'well', 'then', 'the', 'immediate', 'question', 'is', 'to', 'the', 'technician', 'what', 'are', 'you', 'going', 'to', 'ground', 'to', 'you', 'have', 'to', 'be', 'the', 'moon', 'or', 'mars', 'and', 'that', 'doesnt', 'make', 'any', 'sense', 'because', 'the', 'wire', 'wouldnt', 'hold', 'up', 'so', 'when', 'tesla', 'figured', 'out', 'was', 'a', 'way', 'to', 'ground', 'into', 'another', 'dimension', 'they', 'use', 'the', 'words', 'of', 'physics', 'or', 'the', 'proper', 'term', 'for', 'discounters', 'space', 'so', 'that', 'he', 'could', 'push', 'against', 'something', 'without', 'having', 'to', 'have', 'a', 'wall', 'or', 'something', 'back', 'against', 'that', 'that', 'is', 'the', 'secret', 'to', 'teslas', 'telluric', 'transmission', 'system', 'and', 'the', 'transformers', 'he', 'developed', 'could', 'create', 'this', 'mono', 'polar', 'situation', 'and', 'oddly', 'enough', 'tesla', 'did', 'not', 'even', 'understand', 'that', 'because', 'he', 'was', 'mostly', 'working', 'by', 'experiments', 'and', 'the', 'understanding', 'of', 'electricity', 'was', 'so', 'primitive', 'and', 'impaired', 'back', 'then', 'that', 'that', 'he', 'arrived', 'at', 'this', 'through', 'a', 'succession', 'of', 'experiments', 'but', 'he', 'was', 'nobody', 'was', 'capable', 'of', 'defining', 'it', 'analytically', 'that', 'that', 'had', 'to', 'come', 'later', 'when', 'they', 'started', 'building', 'these', 'large', 'substation', 'transformers', 'which', 'had', 'so', 'many', 'windings', 'on', 'them', 'and', 'had', 'such', 'low', 'losses', 'that', 'they', 'would', 'go', 'in', 'the', 'tesla', 'modes', 'and', 'blow', 'up', 'the', 'substations', 'so', 'thats', 'where', 'steinmetz', 'came', 'in', 'to', 'lay', 'the', 'ground', 'work', 'mathematics', 'and', 'then', 'general', 'electric', 'continued', 'through', 'another', 'one', 'of', 'their', 'engineering', 'researchers', 'a', 'guy', 'named', 'eldon', 'billy', 'and', 'he', 'came', 'up', 'with', 'that', 'equation', 'and', 'then', 'lo', 'and', 'behold', 'alexanderson', 'used', 'that', 'form', 'for', 'his', 'transmission', 'system', 'so', 'that', 'laid', 'the', 'groundwork', 'for', 'for', 'a', 'theoretical', 'basis', 'for', 'this', 'and', 'then', 'through', 'my', 'experiments', 'and', 'my', 'mathematical', 'work', 'is', 'is', 'with', 'the', 'ac', 'paper', 'that', 'im', 'writing', 'i', 'do', 'take', 'it', 'to', 'the', 'mono', 'polar', 'consideration', 'and', 'i', 'demonstrate', 'the', 'devices', 'are', 'working', 'and', 'in', 'the', 'upcoming', 'lecture', 'im', 'going', 'to', 'get', 'really', 'deep', 'into', 'doubt', 'okay', 'well', 'what', 'are', 'you', 'definitely', 'looking', 'forward', 'to', 'that', 'i', 'would', 'like', 'to', 'know', 'though', 'theres', 'any', 'individuals', 'that', 'you', 'would', 'like', 'to', 'thank', 'for', 'and', 'such', 'well', 'i', 'can', 'thank', 'aaron', 'for', 'you', 'know', 'helping', 'me', 'put', 'all', 'this', 'together', 'thats', 'the', 'first', 'start', 'and', 'then', 'you', 'know', 'i', 'can', 'thank', 'the', 'people', 'that', 'i', 'dont', 'know', 'the', 'name', 'sub', 'that', 'came', 'up', 'with', 'the', 'money', 'so', 'that', 'that', 'we', 'can', 'provide', 'the', 'bond', 'and', 'then', 'you', 'know', 'im', 'thanking', 'a', 'number', 'of', 'the', 'people', 'in', 'the', 'government', 'that', 'i', 'cant', 'give', 'the', 'names', 'out', 'you', 'know', 'that', 'theyre', 'willing', 'to', 'take', 'the', 'time', 'you', 'know', 'to', 'make', 'my', 'project', 'part', 'of', 'you', 'know', 'their', 'daily', 'work', 'and', 'then', 'you', 'know', 'i', 'thank', 'the', 'people', 'that', 'you', 'know', 'that', 'write', 'me', 'letters', 'and', 'want', 'to', 'know', 'about', 'stuff', 'and', 'then', 'i', 'write', 'them', 'back', 'and', 'they', 'build', 'things', 'and', 'then', 'they', 'send', 'things', 'back', 'and', 'then', 'i', 'you', 'know', 'that', 'we', 'do', 'more', 'figuring', 'and', 'then', 'so', 'so', 'theres', 'a', 'lot', 'of', 'people', 'to', 'think', 'that', 'that', 'i', 'either', 'cant', 'mention', 'the', 'names', 'of', 'or', 'i', 'dont', 'know', 'or', 'you', 'know', 'then', 'that', 'i', 'do', 'know', 'wonderful', 'well', 'thank', 'you', 'erica', 'but', 'we', 'are', 'so', 'great', 'for', 'your', 'work', 'and', 'all', 'of', 'your', 'study', 'thats', 'going', 'into', 'such', 'great', 'lysosome', 'also', 'sharing', 'the', 'legacy', 'of', 'nikola', 'tesla', 'well', 'erik', 'your', 'work', 'has', 'been', 'absolutely', 'phenomenal', 'and', 'we', 'really', 'appreciate', 'all', 'the', 'wonderful', 'work', 'youre', 'doing', 'for', 'mankind', 'and', 'we', 'want', 'to', 'thank', 'you', 'for', 'joining', 'us', 'today', 'on', 'tesla', 'vision', 'and', 'everyone', 'we', 'encourage', 'you', 'to', 'check', 'out', 'erik', 'pcom', 'and', 'erik', 'this', 'definitely', 'wont', 'be', 'the', 'last', 'time', 'well', 'be', 'hearing', 'from', 'you', 'know', 'i', 'enjoy', 'doing', 'these', 'things', 'so', 'im', 'looking', 'forward', 'to', 'the', 'next', 'opportunity', 'oh', 'absolutely', 'were', 'definitely', 'gonna', 'have', 'you', 'on', 'banker', 'best', 'of', 'luck', 'and', 'thank', 'you', 'very', 'much', 'for', 'joining', 'tesla', 'talk', 'tv', 'and', 'were', 'looking', 'forward', 'to', 'hear', 'from', 'you', 'again', 'okay', 'well', 'thank', 'you', 'thank', 'you', 'thank', 'you', 'bye', 'now', 'you']\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Clean the text, then tokenize\n",
+    "\n",
+    "# dimensional measurements, like 12000 volts can be tokenized as numeric bigrams\n",
+    "# range and domain interpreted from context\n",
+    "\n",
+    "text = str(df.loc[0][4]).lower()\n",
+    "# Similar to regex, with dictionary mapping. translate\n",
+    "text = text.translate(str().maketrans({\n",
+    "    \"'\" : \"\",\n",
+    "    '\"' : '',\n",
+    "    '`' : '',\n",
+    "    \".\" : \"\",\n",
+    "    \",\" : \"\",\n",
+    "    \"-\" : \"\",\n",
+    "    \"$\" : \"\"\n",
+    "}))\n",
+    "\n",
+    "## here the dimensions can be detected\n",
+    "## These can be used for dimensional analysis \n",
+    "unique_dimensions = re.findall('\\w\\d\\w*',text)\n",
+    "## These are now present in a list, and the matches can be scrubbed from the text\n",
+    "#text = re.sub('\\w\\d\\w*','',text)\n",
+    "\n",
+    "## NOTE: Part of these type of documents are the pro nouns and proper noun name equivalence classification of \n",
+    "##       particular individuals and their associated body of works. \n",
+    "\n",
+    "#print(text)\n",
+    "text_tokens = text.split()\n",
+    "print(unique_dimensions)\n",
+    "print(text_tokens)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "eeae4733",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "## context based translation error correction can go here. As more documents are processed from a single or single\n",
+    "## set of sources, it can be axiomatically assumed that the information should be logically and in nomenclature\n",
+    "## at least self-consistent. For example, when the phonetic translation yields a mispelled variant of a person's\n",
+    "## name, or other properly named noun such as a business or website, other data from the title, description and\n",
+    "## additional transcripts in the same spoken set can be retroactively corrected."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5ba32406",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "## This type of object may be useful for extracting phrase structures, an easy first pass would be to simply\n",
+    "## construct a phrase by finding the matching position and creating a sub-list spanning that index -x and that index\n",
+    "## +x (say 9) to grab that section of text\n",
+    "phrase_match = []\n",
+    "for word_token in text_tokens:\n",
+    "    if word_token == compare_string:\n",
+    "        ## get phrase"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "97b2219c",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f3c3f837",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2cae7071",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d790e8cf",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "05119430",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a5d5f0bc",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0e808437",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d1f2b7ec",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "412423ff",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "57678177",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a6a416d6",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "44f9d87b",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "45898875",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['historically', 'become', 'expected', 'interest', 'polyface', 'particularly', 'reception', 'utilities', 'law', 'laboratory', 'apparently', 'complications', 'really', 'interference', 'defies', 'volt', 'banker', '20s', 'advanced', 'imagine', 'allowed', 'encouraging', 'situations', 'thrown', 'hundreds', 'explained', 'way', 'four', 'head', 'explaining', 'welcome', 'damaged', '250', 'lecture', 'stop', 'first', 'realized', 'whats', 'anywhere', 'states', 'idea', 'is', 'building', 'pilot', 'theory', 'indications', 'icing', 'objectives', 'ive', 'advised', 'sierras', 'month', 'transmission', 'produce', 'satellites', 'powered', 'million', 'fantastic', 'everything', 'principles', 'fearless', 'money', 'plus', 'longer', 'submarine', 'forward', 'wanted', 'aspect', 'physics', 'consideration', 'resources', 'particular', 'start', 'people', 'decibels', 'because', 'at', 'probably', 'jump', 'level', 'practical', 'tried', 'despise', 'books', 'dropped', 'transformer', 'complicated', 'worry', 'complication', 'shops', 'landed', 'discovery', 'steinmetz', 'somewhere', 'nowhere', 'looking', 'meet', 'clarify', 'chair', 'mail', 'water', 'stronger', 'humankind', 'valuable', 'tuning', 'our', 'glad', 'engineered', 'corolla', 'that', 'complex', 'far', 'writing', 'basis', 'thank', 'ones', 'theyve', 'gaining', 'want', 'rise', 'standard', 'save', 'quantities', 'replicated', 'jj', 'did', 'intellectual', 'curious', 'briefly', 'death', 'reality', 'us', 'public', 'map', 'direction', 'just', 'magnetic', 'fortunate', 'doing', 'standpoint', 'meter', 'keeping', 'remote', 'cut', 'would', 'statistically', 'rca', 'months', 'pocket', 'engage', 'billy', 'alexandrian', 'him', 'blow', 'involved', 'any', 'district', 'point', 'japan', 'belgrade', 'understanding', 'incredible', '18', 'generated', 'thursday', 'automobiles', 'gentlemen', 'they', 'indiegogo', 'stopped', 'theoretical', 'supported', 'chicken', 'wilderness', 'wire', 'oriented', 'sen', 'resident', 'took', 'creatures', 'came', 'might', 'mindboggling', 'becomes', 'involve', 'run', 'happening', '10', '24', 'switch', 'saying', 'prodigal', 'utility', 'demonstrate', 'drop', 'results', 'an', 'vibrator', 'model', 'sort', 'now', 'started', 'open', 'loaded', 'existed', 'should', 'rate', 'alternating', 'joke', 'going', 'different', 'episode', 'knew', 'prediction', 'forints', 'moon', 'mechanical', 'forever', 'near', 'impaired', 'something', 'always', 'unfamiliar', 'kidnapping', 'yourself', 'negotiations', 'parts', 'never', 'receptacle', 'six', 'based', 'substations', 'currently', 'screwing', 'synthesis', 'faced', 'tubes', 'infinite', 'these', 'notes', 'position', 'tech', 'wise', 'having', 'claiming', 'whipping', 'family', 'somebodys', 'wow', 'kilocycles', 'uncomfortable', 'decided', 'shift', 'coming', 'even', '160', 'his', 'damocles', 'equipment', 'device', 'banks', 'talked', 'afford', 'voodoo', 'air', 'fcc', 'looks', 'diane', 'meantime', 'few', 'ten', 'last', 'bell', 'digging', 'vlf', 'late', 'days', 'sense', 'together', 'check', 'oh', 'meeting', 'sprouted', 'lost', 'human', 'put', 'worked', 'transmitting', 'difficult', 'sailors', 'longdistance', 'valley', 'trashed', 'graduated', 'details', 'dead', 'limit', 'utilizing', 'class', 'screw', 'technicians', 'northern', 'popularity', 'devices', 'independence', 'reading', 'induction', 'panels', 'under', 'progress', 'supposed', 'name', 'next', 'lo', 'animals', 'superseded', 'take', 'important', 'fault', 'process', '18hour', 'birthday', 'proper', '30', 'resemble', 'developed', 'feasibility', 'present', 'sudden', 'license', 'takes', 'nice', 'grade', 'write', 'borderlands', 'most', 'interior', 'body', 'entire', 'fiveo', 'grading', 'smart', 'impossible', 'care', 'terror', 'operating', 'figuring', 'soon', 'studied', 'turns', 'nikola', 'unfortunate', 'significance', 'amount', 'see', 'this', 'algebra', 'advancement', 'property', '1000', 'early', 'trouble', 'ready', 'honest', 'coyotes', 'subject', 'learned', 'fast', 'quite', 'friendly', 'responsibilities', 'witness', 'somehow', 'remember', 'coaxial', 'cant', 'lights', 'postoffice', 'but', 'propagation', 'tehachapi', 'who', 'warm', 'writings', 'only', 'paid', 'plans', 'form', 'things', 'sure', 'works', 'pay', 'obstacle', 'down', 'physicists', 'tricked', 'emp', 'experimenting', 'wrote', 'died', 'one', 'spooks', 'them', 'survey', 'upcoming', 'scream', 'wireless', 'used', 'technological', 'will', 'everyones', 'company', 'seismic', 'united', 'ultimately', 'are', 'lie', 'ebay', 'he', 'ancient', 'own', '45', 'putting', 'childhood', 'brilliant', 'figure', 'stuck', 'be', 'couple', 'street', 'instinct', 'major', 'portrayed', 'labor', 'wind', 'hear', 'backup', 'doesnt', 'definite', 'encourage', 'listeners', 'well', 'transformed', 'organizations', 'minus', 'completely', 'generalized', 'explain', 'obsolete', 'period', 'donated', 'fifty', 'wouldnt', 'polina', 'may', 'here', 'so', 'problem', 'individuals', 'find', 'coils', 'network', 'transformers', 'disrupt', 'relations', 'maybe', 'knows', 'conducted', 'telluric', 'know', 'erik', 'crews', 'stunning', 'whos', 'line', 'using', 'luck', 'horse', 'tough', 'communications', 'beside', 'lived', 'curiosity', 'believe', 'fullwidth', 'if', 'ago', 'enough', 'tomorrow', 'noble', 'draping', 'written', 'special', 'electrostatic', 'inventor', 'said', 'country', 'derive', 'geometry', 'daily', 'wish', 'nine', 'upon', 'into', 'succession', 'exist', 'possibly', 'alexandros', 'size', 'grid', 'call', 'same', 'course', 'skeleton', 'buying', 'after', 'earthquakes', 'than', 'replace', 'associate', 'otherwise', 'anymore', 'finding', 'support', 'time', 'send', 'versus', 'in', 'ideas', 'appear', 'two', 'all', 'operational', 'being', 'holes', 'relationships', 'once', 'sam', 'writer', 'finally', 'medium', 'until', 'right', 'told', 'problems', 'lead', 'phase', 'also', 'acclaimed', 'fooling', 'requested', 'very', 'peoples', 'create', 'coffee', 'today', 'robbed', 'onto', 'worth', 'generator', 'seismograph', 'pushing', 'weight', 'project', 'bushes', 'analytical', 'roped', 'tesla', 'i', 'school', 'stuffs', 'define', 'taught', 'hour', 'operate', 'break', 'learning', 'desert', 'extent', 'rest', 'neck', 'kind', 'and', 'whatever', 'religion', 'light', 'managed', 'kept', 'as', 'made', 'wideband', 'been', 'absolutely', 'advice', 'independent', 'everyone', 'mono', 'theres', 'secret', 'funded', 'need', 'wiped', 'dollard', 'scientist', 'mention', 'stuff', 'looming', 'confusing', 'assistants', 'april', 'fascinating', 'like', 'undergoing', 'useful', 'seven', 'grow', 'mankind', 'genius', 'celebrate', 'doll', 'wireline', 'order', 'wrong', 'needs', 'rebuild', 'have', 'book', 'across', 'invite', 'traveling', 'distant', 'somebody', 'constructing', 'experiences', 'diagrams', 'war', 'joining', 'getting', 'needed', 'making', 'supporting', 'didnt', 'locations', 'apply', 'small', 'park', 'living', 'plan', 'toyota', 'thing', 'conventional', 'lay', 'talking', 'immediate', 'named', 'antenna', 'couldnt', 'turn', 'planet', 'enemy', 'tied', 'various', 'tick', 'above', 'beginnings', 'anybody', 'scientifically', 'transmitter', 'doubt', 'happen', 'mile', 'energetic', 'back', 'with', 'morning', 'invention', 'phone', 'good', 'culture', 'retrograde', 'relationship', 'or', 'san', 'vehicles', 'belongs', 'engineering', 'jay', 'discoveries', 'has', 'papers', 'does', 'taken', 'potential', 'original', 'science', 'education', 'la', 'deltay', 'passed', 'starting', 'facilities', 'part', 'landers', 'turned', 'freaked', 'added', 'pulled', 'transmitters', 'area', 'happy', 'electromagnetic', 'sectional', 'year', '8', 'receiver', 'else', 'researchers', 'hiding', 'done', 'followers', 'able', 'paying', 'hanging', 'material', 'on', 'organization', 'shut', 'question', 'electric', 'instigated', 'plato', 'laid', 'climb', 'consume', 'internet', 'dimension', 'dollars', 'lis', 'along', 'base', 'alexanders', 'tv', 'geological', 'pen', 'ya', 'starts', 'francisco', 'says', 'advise', 'karma', 'magnet', 'garbage', 'items', 'travel', 'terminal', 'controls', 'walk', '20', 'hole', 'smallscale', 'free', 'station', 'miles', 'letters', 'equation', 'electro', 'theyre', 'force', 'mean', 'predicated', 'coyote', 'models', 'uh', 'legacy', 'sharing', 'originally', 'involves', 'individual', 'goes', 'hope', 'polar', 'demand', 'kilowatt', 'configurations', 'opportunity', 'carrying', '15', 'imaginary', 'ignore', 'build', 'fixing', 'fifth', 'which', 'appreciate', '12000', 'day', 'university', 'space', 'left', 'souls', 'farnsworth', 'thatd', 'reach', 'zoran', 'modes', 'every', 'revealed', 'fearing', 'type', 'difference', 'friend', 'biography', 'obsession', 'low', 'go', 'poles', 'experiment', '50s', 'out', 'related', 'hit', 'hearing', 'holders', 'trying', 'train', 'primitive', 'insurance', 'revamp', 'im', 'dreams', 'alexander', 'losses', 'abandoned', 'advance', 'around', 'available', 'issue', 'within', 'supply', 'corporation', 'financial', 'math', 'tristan', 'many', 'lone', 'ships', 'off', 'get', 'studies', 'thanking', 'sitting', 'blaze', 'real', 'transmit', 'friends', 'of', 'accumulated', 'lines', 'mathematics', 'multi', 'audio', 'pacific', 'ask', 'earthquake', 'topic', 'working', 'tackle', 'activity', 'possibilities', 'whenever', 'dr', 'bad', 'say', 'companies', 'hasnt', 'later', 'could', 'potentially', 'achieve', 'possible', 'soviet', 'singular', 'junior', 'beginning', 'allow', 'local', 'beacon', 'overwhelms', 'my', 'talk', 'another', 'presented', 'seventy', 'pine', 'inventors', 'parameters', 'power', 'analysis', 'november', 'weve', 'stick', 'situation', 'was', 'andreas', 'likes', 'almost', 'recorders', 'technology', 'read', 'enjoy', 'rats', 'popular', 'located', 'seen', 'towns', 'trail', 'breakthrough', 'convert', 'begun', 'phenomenal', 'city', 'expertise', 'operation', 'crisis', 'listening', 'guy', 'acquire', 'numbers', 'by', 'investigate', 'earlier', 'alex', 'gettogethers', 'agency', 'negotiate', 'side', 'eastern', 'created', 'bye', 'behold', 'pcom', 'show', 'wishywashy', 'feinstein', 'fear', 'think', 'amazing', 'title', 'representation', 'greeks', 'new', 'follow', 'picked', 'whole', 'agencies', 'national', 'wherever', 'tell', 'recently', 'showed', 'top', 'predicting', 'youre', 'interesting', 'got', 'transpired', 'dealing', 'response', 'analytically', 'behind', 'archaeological', 'government', 'bust', 'designed', 'sand', 'trade', 'inch', 'necessary', 'completion', 'equations', 'where', 'already', 'for', 'socalled', 'life', 'directed', 'world', 'those', 'enthused', 'dollar', 'tower', 'work', 'guest', 'windmills', 'assembled', 'listener', 'southern', 'describe', 'northridge', 'built', 'brought', 'hopelessness', 'cohost', 'greece', 'remove', 'vicepresident', 'quarter', 'though', 'busted', 'yet', 'became', 'outside', 'best', 'supporter', 'willing', 'understandable', 'godly', 'solar', 'figured', 'do', 'uses', 'house', 'develop', 'fix', 'hours', 'advertise', 'security', 'california', 'drew', 'series', 'providing', 'pursue', 'mostly', 'reports', 'mountains', 'multiple', 'energy', 'reserve', 'elsewhere', 'lets', 'anything', 'indonesia', 'environment', 'systems', 'impact', 'westinghouse', 'hf', 'teslas', 'essentially', 'football', 'band', 'up', 'conditions', 'expecting', 'highly', 'mars', 'nearly', 'place', 'gave', 'bam', 'spent', 'complete', 'definitely', 'nobody', 'years', 'nearsighted', 'fine', 'presently', 'engineer', 'love', 'fully', 'land', 'feral', 'youve', 'icon', 'add', 'positive', 'discovered', 'vision', 'thousand', 'actual', 'defaming', 'faster', 'electricity', 'none', 'ground', 'hertzian', 'hand', 'normal', 'crowdfunding', 'led', 'when', 'sabotage', 'backwards', 'materials', 'okay', 'push', 'crowd', 'efforts', 'without', 'dont', 'provided', 'not', 'names', 'guys', 'themselves', 'higher', 'before', 'neighborhood', 'department', 'went', 'watch', 'address', 'there', 'achievement', 'knowing', 'me', 'wont', 'can', 'eldon', 'middle', 'feel', 'certain', 'itll', 'wall', 'town', 'cost', 'licenses', 'front', 'speed', 'helping', 'hold', 'corporate', 'help', 'monumental', 'over', 'end', 'worn', 'pack', 'benches', 'buys', 'disasters', 'let', 'personal', 'creativity', 'three', 'basic', 'foreign', 'field', 'frequency', 'epicenter', 'frequencies', 'try', 'bolinas', 'historical', 'july', 'paperwork', 'round', 'lose', 'sheer', 'conference', 'deal', 'resolved', 'car', 'sciences', 'large', 'demonstrator', 'move', 'serve', 'their', 'clean', 'verse', 'long', 'unfortunately', 'prove', 'opinion', 'unless', 'expenses', 'smashed', 'waves', 'closed', 'pretty', 'system', 'dig', 'industry', 'gas', 'what', 'attention', 'detail', 'no', 'variety', 'live', 'eight', 'society', 'guess', 'einstein', 'railroad', 'technically', 'story', 'prints', 'audience', 'arrived', 'happens', 'substation', 'gone', 'magnifying', 'then', 'confined', 'night', 'hideous', 'posted', 'technologies', 'coastal', 'werent', 'installation', 'review', 'june', 'successful', 'juvenile', 'week', 'edition', 'american', 'happened', 'ernst', 'scale', 'normally', 'from', 'face', 'erica', 'distinction', 'exactly', 'cans', 'fifteen', 'museum', 'five', 'director', 'had', 'inspired', 'several', 'fbi', 'how', 'keep', 'closer', 'werth', 'person', 'existent', 'intended', 'controversy', 'defining', 'thats', 'classical', 'beyond', 'converted', 'lot', 'measurements', 'vandalized', 'to', 'experimental', 'big', 'cosmic', 'disaster', 'age', 'it', 'service', 'pickup', 'half', 'since', 'step', 'videos', 'constructed', 'attempt', 'closest', 'gives', 'capable', 'senior', 'latched', 'rattling', 'against', 'watching', 'enlighten', 'speaking', 'great', 'navy', 'suppose', 'sustainable', 'coast', 'survived', 'saavy', 'close', 'use', 'some', 'delivery', 'library', 'words', 'warning', 'found', 'exponentially', 'comfortable', 'plant', 'recent', 'paper', 'term', 'again', 'notice', 'donate', 'experiments', 'diagram', 'um', 'learn', 'active', 'your', 'gonna', 'tube', 'mainly', 'secrets', 'cable', 'make', 'private', 'negative', '62', 'nothing', 'stupid', 'biggest', 'between', 'son', 'interested', 'bulb', 'lots', 'id', 'track', 'prior', 'continued', 'squeeze', 'occurred', 'seem', 'international', 'touch', 'such', 'parents', 'portion', 'ever', 'bond', 'pursuit', 'little', 'dimensions', 'yeah', 'massive', '48', 'beautiful', 'lysosome', 'kph', 'theyll', 'ladies', 'transfer', 'elephant', 'deep', 'publicly', 'equivalent', 'isnt', 'much', 'give', 'looked', 'alexanderson', 'matter', 'educating', 'december', 'technician', 'funding', 'previously', 'hang', 'fancy', 'test', 'bit', 'windings', 'come', 'quasi', 'fortescue', 'its', 'seed', 'ransom', 'dangerous', 'wants', 'groundwork', 'office', 'pursuing', 'effort', 'hidden', 'kinds', 'hurdles', 'anderson', 'weather', 'either', 'path', 'promptly', '2000', 'except', 'campaign', 'polyphase', 'old', 'obviously', 'away', 'quadrant', 'through', 'convince', 'begin', 'still', 'you', 'radio', 'oneil', 'bulldozed', 'eric', 'squat', 'oddly', 'wonderful', 'owner', 'whittier', 'continue', 'delicate', 'wasnt', 'number', 'pays', 'telephone', 'aaron', 'celebration', 'explanations', 'please', 'a', 'actually', 'wardenclyffe', 'other', 'excited', 'everythings', 'radar', 'provide', 'carry', 'literally', 'hundred', 'possibility', 'adopted', 'sub', 'engaged', 'switches', 'welfare', 'general', 'destitute', 'we', 'understand', 'hard', 'carrier', 'statistics', 'cannot', 'conspiracy', 'lifestyles', 'protected', 'terms', 'pictures', 'study', 'discounters', 'more', 'mathematical', 'electrical', 'persevered', 'the', 'were', 'investors', 'destroyed', 'ignored', 'why', 'third', 'sources', 'television', 'underway', 'current', 'discover', 'helped', 'fighting', 'ac', 'mr', '80', 'giant', 'high', 'fortunately', 'pole', 'basically', 'about']\n"
+     ]
+    }
+   ],
+   "source": [
+    "###\n",
+    "# These tokens are unique and consist of all the words in the transcript in the dataframe row 0 col 4\n",
+    "###\n",
+    "text_tokens = text.split()\n",
+    "## Tokenization\n",
+    "unique_tokens = list(set(text_tokens))\n",
+    "print(unique_tokens)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "66f635d9",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "TypeError",
+     "evalue": "expected string or bytes-like object",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mTypeError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-19-00be86679f97>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mre\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0;31m# capture all the numbers as n-gram objects for dimensional analysis\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 3\u001b[0;31m \u001b[0mdimensions\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mre\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfindall\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'/\\d/'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0munique_tokens\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+      "\u001b[0;32m/usr/lib/python3.9/re.py\u001b[0m in \u001b[0;36mfindall\u001b[0;34m(pattern, string, flags)\u001b[0m\n\u001b[1;32m    239\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    240\u001b[0m     Empty matches are included in the result.\"\"\"\n\u001b[0;32m--> 241\u001b[0;31m     \u001b[0;32mreturn\u001b[0m \u001b[0m_compile\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpattern\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mflags\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mfindall\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mstring\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    242\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    243\u001b[0m \u001b[0;32mdef\u001b[0m \u001b[0mfinditer\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpattern\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mstring\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mflags\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mTypeError\u001b[0m: expected string or bytes-like object"
+     ]
+    }
+   ],
+   "source": [
+    "import re\n",
+    "# capture all the numbers as n-gram objects for dimensional analysis\n",
+    "dimensions = re.findall('/\\d/', unique_tokens)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "bcadb099",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "363444c6",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "87fe8af9",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "7f0caebb",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "17f30bbd",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c28dcc4e",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e3557072",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0a67840b",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4720e107",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "84053eb9",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5500f720",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b342edaa",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6cc0f3ec",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "1cfe163c",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b67f3f61",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "07b30132",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "79bc548a",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ff5c6bf3",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "68d30f75",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
